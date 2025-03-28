@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机森林介绍 - AI知识库</title>
+  <link rel="icon" href="../images/logo.png" type="image/png"> <!-- 修改为相对路径 -->
+  <link rel="stylesheet" href="../css/styles.css"> <!-- 修改为相对路径 -->
+</head>
+<body>
+  <div id="navbar-container"></div> <!-- 导航栏的位置 -->
+
+  <div class="container">
+    <div class="article-header">
+      <h1>随机森林介绍</h1>
+      <div class="article-meta">发布时间：2025-03-28 | 作者：AI技术团队 | 阅读量：350</div>
+    </div>
+
+    <div class="toc">
+      <h4>文章目录</h4>
+      <ul>
+        <li><a href="#overview">随机森林概述</a></li>
+        <li><a href="#advantages">随机森林的优势</a></li>
+        <li><a href="#principle">随机森林的工作原理</a></li>
+        <li><a href="#applications">随机森林的应用场景</a></li>
+      </ul>
+    </div>
+
+    <div class="article-content">
+      <h2 id="overview">随机森林概述</h2>
+      <p>随机森林是一种集成学习方法，通过结合多个决策树的预测来提高模型的准确性和鲁棒性。它广泛应用于分类、回归等任务。</p>
+
+      <h2 id="advantages">随机森林的优势</h2>
+      <p><strong>高准确率：</strong>通过多个决策树的集成，能够降低过拟合的风险，从而提高模型的准确性。</p>
+      <p><strong>抗噪声：</strong>通过随机性和多数投票的方式，减少了单个决策树受噪声影响的可能性。</p>
+      <p><strong>适用性广：</strong>适用于各种类型的数据，包括结构化数据和非结构化数据。</p>
+
+      <h2 id="principle">随机森林的工作原理</h2>
+      <p>随机森林通过创建多个独立的决策树来进行预测。每个决策树都基于不同的随机样本和特征子集训练而成。最终的预测结果是所有决策树的预测结果的平均值或多数投票。</p>
+
+      <h2 id="applications">随机森林的应用场景</h2>
+      <p>随机森林广泛应用于各种领域，例如：金融风控、医疗诊断、图像识别、文本分类等。</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AI技术团队. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function loadNavbar() {
+      const navbarContainer = document.getElementById('navbar-container');
+      fetch('../navbar.html') <!-- 修改为相对路径 -->
+        .then(response => response.text())
+        .then(data => {
+          navbarContainer.innerHTML = data;
+        })
+        .catch(err => console.error('加载导航栏失败', err));
+    }
+
+    loadNavbar();
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>

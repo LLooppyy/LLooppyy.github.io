@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>机器学习介绍 - AI知识库</title>
+  <link rel="icon" href="D:\桌面\cdu\web\images\logo.png" type="image/png">
+  <!-- 引入 Font Awesome（可选，用于图标） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #30cfd0;
+      --footer-bg: #1a1a1a;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+    body {
+      background: #f0f2f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* 导航栏 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      margin-right: 3rem;
+    }
+    .nav-brand img {
+      height: 40px;
+      transition: transform 0.3s;
+    }
+    .nav-brand img:hover {
+      transform: scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-grow: 1;
+    }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .user-info a img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    /* 主体容器 */
+    .container {
+      max-width: 1100px;
+      margin: 120px auto 50px; /* 顶部预留固定导航空间 */
+      background: #fff;
+      padding: 30px 40px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    /* 文章头部 */
+    .article-header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .article-header h1 {
+      font-size: 32px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    .article-meta {
+      font-size: 14px;
+      color: #777;
+    }
+    /* 目录 */
+    .toc {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary-color);
+    }
+    .toc h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin-bottom: 8px;
+    }
+    .toc ul li a {
+      color: var(--primary-color);
+      font-size: 14px;
+    }
+    /* 文章内容 */
+    .article-content p {
+      margin-bottom: 16px;
+      text-indent: 2em;
+      font-size: 16px;
+    }
+    .article-content h2, .article-content h3 {
+      margin: 20px 0 10px;
+      color: #222;
+    }
+    .article-content img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+    }
+    /* 页脚 */
+    footer {
+      background: var(--footer-bg);
+      color: #e0e0e0;
+      text-align: center;
+      padding: 20px 5%;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .container {
+        margin: 120px 10px 50px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="D:\桌面\cdu\web\images\logo.png" alt="AI知识库">
+    </a>
+    <ul class="nav-links">
+      <li><a href="D:\桌面\cdu\web\index.html">首页</a></li>
+      <li><a href="D:\桌面\cdu\web\knowledge.html">AI 知识库</a></li>
+      <li><a href="#">AI 新闻</a></li>
+      <li><a href="#">友情链接</a></li>
+    </ul>
+    <div class="user-info">
+      <a href="D:\桌面\cdu\web\login.html">
+        <img src="D:\桌面\cdu\web\images/user.webp" alt="默认头像">
+      </a>
+    </div>
+  </nav>
+
+  <!-- 主体文章容器 -->
+  <div class="container">
+    <!-- 文章头部 -->
+    <div class="article-header">
+      <h1>机器学习介绍</h1>
+      <div class="article-meta">发布时间：2025-03-21 | 作者：AI上智能团队 | 阅读量：480</div>
+    </div>
+    <!-- 目录 -->
+    <div class="toc">
+      <h4>文章目录</h4>
+      <ul>
+        <li><a href="#relationship">关系解析</a></li>
+        <li><a href="#definition">什么是机器学习？</a></li>
+        <li><a href="#idea">机器学习的基本思路</a></li>
+        <li><a href="#principle">机器学习的原理</a></li>
+        <li><a href="#steps">机器学习的7个步骤</a></li>
+        <li><a href="#algorithms">15种经典机器学习算法</a></li>
+      </ul>
+    </div>
+    <!-- 文章内容 -->
+    <div class="article-content">
+      <h2 id="relationship">机器学习、人工智能、深度学习的关系</h2>
+      <p>1956 年提出 AI 概念，短短3年后（1959） Arthur Samuel 就提出了机器学习的概念：</p>
+      <p><em>Field of study that gives computers the ability to learn without being explicitly programmed.</em></p>
+      <p>机器学习研究和构建的是一种特殊算法（而非某一个特定的算法），能够让计算机自己在数据中学习从而进行预测。所以，机器学习不是某种具体的算法，而是很多算法的统称。</p>
+      <p>机器学习包含了很多种不同的算法，深度学习就是其中之一，其他方法包括决策树、聚类、贝叶斯等。深度学习的灵感来自大脑的结构和功能，即许多神经元的互连。人工神经网络（ANN）是模拟大脑生物结构的算法。</p>
+      <p>不管是机器学习还是深度学习，都属于人工智能（AI）的范畴。所以人工智能、机器学习、深度学习可以用下面的图来表示：</p>
+      <p>【人工智能、机器学习、深度学习的关系示意图】</p>
+      <p>详细了解人工智能：《「2019更新」什么是人工智能？（AI的本质+发展史+局限性）》</p>
+      <p>详细了解深度学习：《一文看懂深度学习（白话解释+8个优缺点+4个典型算法）》</p>
+      <p>面向所有人的机器学习科普大全</p>
+      
+      <h2 id="definition">什么是机器学习？</h2>
+      <p>在解释机器学习的原理之前，先把最精髓的基本思路介绍给大家，理解了机器学习最本质的东西，就能更好地利用机器学习，同时这个解决问题的思维还可以用到工作和生活中。</p>
+      <p>机器学习研究和构建的是一种特殊算法，通过数据学习实现预测和决策，而不是某个特定算法的单一方法。</p>
+      
+      <h2 id="idea">机器学习的基本思路</h2>
+      <p>机器学习的基本思路可以归纳为三步：</p>
+      <p>1. 将现实生活中的问题抽象成数学模型，并且明确模型中各参数的作用；</p>
+      <p>2. 利用数学方法对这个数学模型进行求解，从而解决现实生活中的问题；</p>
+      <p>3. 评估这个数学模型，判断是否真正解决了问题，解决得如何。</p>
+      <p>无论使用哪种算法或数据，核心思路都逃不出上述三步。值得注意的是，不是所有问题都可以转换为数学问题，只有那些可数学化的问题才能被 AI 解决。</p>
+      
+      <h2 id="principle">机器学习的原理</h2>
+      <p>下面以监督学习为例，介绍机器学习的实现原理：</p>
+      <p>假如我们正在教小朋友识字（一、二、三），我们会拿出3张卡片，让小朋友看卡片并分别说出“一条横线的是一、两条横线的是二、三条横线的是三”。</p>
+      <p>通过不断重复这个过程，小朋友的大脑在不断学习，最终学会了识字。这一过程在机器学习中可以类比为：</p>
+      <p>—— 训练集：用于训练的小朋友识字卡片；</p>
+      <p>—— 特征：卡片上“一条横线、两条横线”的区别；</p>
+      <p>—— 建模：小朋友不断学习和总结的过程；</p>
+      <p>—— 模型：小朋友学会识字后总结出的规律。</p>
+      <p>通过训练、不断识别特征和建模，最终形成有效模型，这个过程即为“机器学习”。</p>
+      
+      <h2 id="steps">机器学习的7个步骤</h2>
+      <p>机器学习在实际操作中通常分为7个步骤：</p>
+      <p>1. 收集数据：例如，通过设备采集样本（如酒精度和颜色数据）。</p>
+      <p>2. 数据准备：清洗数据，并将数据分为训练集、验证集和测试集。</p>
+      <p>3. 选择模型：根据问题特点选择合适的算法模型（例如线性模型、决策树等）。</p>
+      <p>4. 训练：利用训练集训练模型，机器自动完成运算。</p>
+      <p>5. 评估：使用验证集和测试集评估模型性能，主要指标包括准确率、召回率和 F 值。</p>
+      <p>6. 参数调整：通过调整模型参数进一步优化模型性能。</p>
+      <p>7. 预测：使用最终模型对新数据进行预测，实现实际应用。</p>
+      <p>例如，通过酒精度和颜色来区分红酒和啤酒，当模型训练完成后，只需输入新酒的特征，模型就能判断该酒是红酒还是啤酒。</p>
+      
+      <h2 id="algorithms">15种经典机器学习算法</h2>
+      <p>以下是一些常见的机器学习算法及其训练方式：</p>
+      <p>• 线性回归 —— 监督学习</p>
+      <p>• 逻辑回归 —— 监督学习</p>
+      <p>• 线性判别分析 —— 监督学习</p>
+      <p>• 决策树 —— 监督学习</p>
+      <p>• 朴素贝叶斯 —— 监督学习</p>
+      <p>• K邻近 —— 监督学习</p>
+      <p>• 学习向量量化 —— 监督学习</p>
+      <p>• 支持向量机 —— 监督学习</p>
+      <p>• 随机森林 —— 监督学习</p>
+      <p>• AdaBoost —— 监督学习</p>
+      <p>• 高斯混合模型 —— 非监督学习</p>
+      <p>• 限制玻尔兹曼机 —— 非监督学习</p>
+      <p>• K-means 聚类 —— 非监督学习</p>
+      <p>• 最大期望算法 —— 非监督学习</p>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer>
+    <p>&copy; 2025 AI上智能. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

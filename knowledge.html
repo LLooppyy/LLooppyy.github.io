@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI知识库 - 人工智能核心知识体系</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <style>
+    :root {
+      --primary-color: #121212;
+      --secondary-color: #2196F3;
+      --accent-color: #30cfd0;
+      --bg-color: #f5f5f5;
+      --card-bg: #ffffff;
+      --shadow-color: rgba(0,0,0,0.1);
+    }
+    /* 基础样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      color: var(--primary-color);
+      line-height: 1.6;
+    }
+    /* 导航栏 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      background: #fff;
+      box-shadow: 0 2px 10px var(--shadow-color);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      margin-right: 3rem;
+    }
+    .nav-brand img {
+      height: 40px;
+      transition: transform 0.3s;
+    }
+    .nav-brand img:hover {
+      transform: scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-grow: 1;
+    }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--secondary-color);
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .user-info a img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    /* 知识库容器 */
+    .knowledge-container {
+      max-width: 1200px;
+      margin: 120px auto 50px;
+      padding: 2rem 3rem;
+      background: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px var(--shadow-color);
+    }
+    .page-title {
+      font-size: 2.8rem;
+      color: var(--primary-color);
+      margin-bottom: 3rem;
+      position: relative;
+      padding-left: 1.2rem;
+    }
+    .page-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 80%;
+      background: var(--secondary-color);
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+    }
+    .category-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 3px 10px var(--shadow-color);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+    .category-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .category-title {
+      font-size: 1.4rem;
+      color: var(--primary-color);
+    }
+    .article-count {
+      background: rgba(33,150,243,0.1);
+      color: var(--primary-color);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    .article-list {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    .article-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      transition: background 0.3s;
+    }
+    .article-item:hover {
+      background: rgba(0,0,0,0.02);
+    }
+    .article-item:last-child {
+      border-bottom: none;
+    }
+    .article-link {
+      color: var(--secondary-color);
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s;
+      font-size: 1rem;
+    }
+    .article-link:hover {
+      color: var(--accent-color);
+    }
+    .see-all {
+      display: inline-block;
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1rem;
+      transition: opacity 0.3s;
+    }
+    .see-all:hover {
+      opacity: 0.8;
+    }
+    /* 响应式 */
+    @media (max-width: 768px) {
+      .knowledge-container {
+        padding: 1rem 1.5rem;
+        margin-top: 100px;
+      }
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="images/logo.png" alt="AI知识库">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="knowledge.html">AI 知识库</a></li>
+      <li><a href="#">AI 新闻</a></li>
+      <li><a href="#">友情链接</a></li>
+    </ul>
+    <div class="user-info">
+      <a href="login.html">
+        <img src="images/user.webp" alt="默认头像">
+      </a>
+    </div>
+  </nav>
+
+  <div class="knowledge-container">
+    <h1 class="page-title">AI知识库</h1>
+    <div class="category-grid">
+      <!-- AI算法板块 -->
+      <div class="category-card">
+        <div class="category-header">
+          <h2 class="category-title">AI 算法</h2>
+          <span class="article-count">5 ARTICLES</span>
+        </div>
+        <ul class="article-list">
+          <li class="article-item">
+            <a href="AI algorithm/CNN.html" class="article-link">
+              卷积神经网络 - CNN
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              机器学习 - ML
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              Attention 机制
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              Encoder-Decoder &amp; Seq2Seq
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              随机森林 - Random forest
+              <span>→</span>
+            </a>
+          </li>
+        </ul>
+        <a href="#" class="see-all">查看全部 →</a>
+      </div>
+      <!-- 基础科普板块 -->
+      <div class="category-card">
+        <div class="category-header">
+          <h2 class="category-title">基础科普</h2>
+          <span class="article-count">5 ARTICLES</span>
+        </div>
+        <ul class="article-list">
+          <li class="article-item">
+            <a href="#" class="article-link">
+              人工智能 - AI
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              分类模型评估指标
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              训练集、验证集、测试集
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              监督学习
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              无监督学习
+              <span>→</span>
+            </a>
+          </li>
+        </ul>
+        <a href="#" class="see-all">查看全部 →</a>
+      </div>
+      <!-- 数学基础板块 -->
+      <div class="category-card">
+        <div class="category-header">
+          <h2 class="category-title">数学基础</h2>
+          <span class="article-count">5 ARTICLES</span>
+        </div>
+        <ul class="article-list">
+          <li class="article-item">
+            <a href="#" class="article-link">
+              向量 | vector
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              随机梯度下降法 (SGD)
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              标量 | scalar
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              假设检验
+              <span>→</span>
+            </a>
+          </li>
+          <li class="article-item">
+            <a href="#" class="article-link">
+              线性代数
+              <span>→</span>
+            </a>
+          </li>
+        </ul>
+        <a href="#" class="see-all">查看全部 →</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
