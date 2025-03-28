@@ -3,81 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>随机森林介绍 - AI知识库</title>
+  <title>随机森林 – Random Forest - AI知识库</title>
   <link rel="icon" href="../images/logo.png" type="image/png">
+  <!-- 引入 Font Awesome（可选，用于图标） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- 引入全局样式 -->
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <!-- 导航栏容器，由 JavaScript 动态加载 navbar.html -->
+  <!-- 导航栏区域，通过 JavaScript 动态加载 navbar.html -->
   <div id="navbar-container"></div>
 
-  <!-- 主体内容容器 -->
+  <!-- 主体文章容器 -->
   <div class="container">
+    <!-- 文章头部 -->
     <div class="article-header">
-      <h1>随机森林介绍</h1>
-      <div class="article-meta">发布时间：2025-03-28 | 作者：AI技术团队 | 阅读量：350</div>
+      <h1>随机森林 – Random Forest</h1>
+      <div class="article-meta">更新时间：2025-03-28 | 阅读量：680</div>
     </div>
+
+    <!-- 目录 -->
     <div class="toc">
       <h4>文章目录</h4>
       <ul>
-        <li><a href="#overview">随机森林概述</a></li>
-        <li><a href="#advantages">随机森林的优势</a></li>
-        <li><a href="#principle">随机森林的工作原理</a></li>
-        <li><a href="#applications">随机森林的应用场景</a></li>
+        <li><a href="#what">什么是随机森林？</a></li>
+        <li><a href="#steps">构造随机森林的 4 个步骤</a></li>
+        <li><a href="#pros_cons">随机森林的优缺点</a></li>
+        <li><a href="#comparison">随机森林 4 种实现方法对比测试</a></li>
+        <li><a href="#applications">随机森林的 4 个应用方向</a></li>
+        <li><a href="#reference">百度百科+维基百科</a></li>
+        <li><a href="#extended">扩展阅读</a></li>
       </ul>
     </div>
+
+    <!-- 文章内容 -->
     <div class="article-content">
-      <h2 id="overview">随机森林概述</h2>
-      <p>随机森林是一种集成学习方法，通过结合多个决策树的预测来提高模型的准确性和鲁棒性。它广泛应用于分类、回归等任务。</p>
+      <p><strong>一文看懂随机森林</strong></p>
+      <p>
+        随机森林是一种由决策树构成的集成算法，在很多情况下都能有不错的表现。本文将介绍随机森林的基本概念、4 个构造步骤、4 种实现方法的对比评测、10 个优缺点和 4 个应用方向。
+      </p>
 
-      <h2 id="advantages">随机森林的优势</h2>
-      <p><strong>高准确率：</strong>通过多个决策树的集成，能够降低过拟合的风险，提高模型准确性。</p>
-      <p><strong>抗噪声：</strong>随机性和多数投票方法减少了单棵树受噪声干扰的可能性。</p>
-      <p><strong>适用性广：</strong>适用于各种数据类型，无需额外降维处理。</p>
+      <h2 id="what">什么是随机森林？</h2>
+      <p>
+        随机森林属于集成学习中的 Bagging（Bootstrap AGgregation 的简称）方法。如果用图来表示它们之间的关系，则随机森林属于集成学习中的 Bagging 方法。
+      </p>
+      <p>
+        <strong>决策树 – Decision Tree</strong><br>
+        决策树是一种简单、解释性强且符合直观思维的算法，是基于 if-then-else 规则的有监督学习算法，上述图片可以直观地表达决策树的逻辑。
+      </p>
+      <p>
+        了解详情请参考《一文看懂决策树 – Decision tree（3个步骤+3种典型算法+10个优缺点）》。
+      </p>
+      <p>
+        随机森林（Random Forest | RF）由多个决策树构成，不同决策树之间彼此独立。当新的样本进入时，每棵决策树分别判断分类，最终以多数投票的结果作为随机森林的输出。
+      </p>
 
-      <h2 id="principle">随机森林的工作原理</h2>
-      <p>随机森林通过以下步骤构建：</p>
+      <h2 id="steps">构造随机森林的 4 个步骤</h2>
+      <p>构造随机森林主要包括以下 4 个步骤：</p>
       <ul>
-        <li>从原始样本中有放回抽取 N 个样本（Bootstrap 抽样）。</li>
-        <li>在每个节点随机选取 m 个特征，然后用某种策略选择最佳分裂属性。</li>
-        <li>构建不剪枝的决策树，直至不能分裂为止。</li>
-        <li>利用多数投票或平均值将所有决策树的结果聚合，得出最终预测结果。</li>
+        <li>
+          <strong>Bootstrap 抽样：</strong> 对样本容量为 N 的数据集，有放回地抽取 N 次，每次抽取 1 个样本，得到 N 个样本作为决策树的训练数据。
+        </li>
+        <li>
+          <strong>特征随机：</strong> 当每个样本有 M 个属性时，在每个节点分裂时，随机从 M 个属性中选取 m 个属性（m << M），然后根据信息增益等策略选择最佳分裂属性。
+        </li>
+        <li>
+          <strong>决策树构建：</strong> 按照步骤 2 进行每个节点的分裂，直至无法继续分裂（整个过程中不进行剪枝）。
+        </li>
+        <li>
+          <strong>结果聚合：</strong> 重复步骤 1～3 构建大量决策树，随机森林最终通过多数投票方式汇总各树结果，给出最终预测。
+        </li>
       </ul>
 
-      <h2 id="applications">随机森林的应用场景</h2>
-      <p>随机森林广泛应用于：</p>
+      <h2 id="pros_cons">随机森林的优缺点</h2>
+      <p><strong>优点：</strong></p>
       <ul>
-        <li>离散值分类</li>
-        <li>连续值回归</li>
+        <li>能够处理高维数据，无需额外降维和特征选择。</li>
+        <li>可评估特征的重要性，并揭示不同特征之间的相互关系。</li>
+        <li>不容易过拟合，训练速度较快且易于并行化。</li>
+        <li>对不平衡数据集具有一定平衡误差的能力。</li>
+        <li>即使部分特征缺失，仍能保持较高准确率。</li>
+      </ul>
+      <p><strong>缺点：</strong></p>
+      <ul>
+        <li>在噪声较大的问题上可能会过拟合。</li>
+        <li>对于取值较多的属性，其影响可能被放大，导致属性权值不够可信。</li>
+      </ul>
+
+      <h2 id="comparison">随机森林 4 种实现方法对比测试</h2>
+      <p>
+        随机森林既可用于分类，也可用于回归。本文对 scikit-learn、Spark MLlib、DolphinDB、XGBoost 四个平台的随机森林实现进行对比，
+        评价指标包括内存占用、运行速度和分类准确性。
+      </p>
+      <p>测试结果如下：</p>
+      <p><em>【随机森林 4 种实现方法对比测试示意图】</em></p>
+      <p>详细说明请参考原文《随机森林算法 4 种实现方法对比测试：DolphinDB 速度最快，XGBoost 表现最差》。</p>
+
+      <h2 id="applications">随机森林的 4 个应用方向</h2>
+      <p>随机森林可以应用于：</p>
+      <ul>
+        <li>离散值的分类</li>
+        <li>连续值的回归</li>
         <li>无监督学习聚类</li>
         <li>异常点检测</li>
       </ul>
+
+      <h2 id="reference">百度百科+维基百科</h2>
+      <p>更多详情请参考百度百科和维基百科相关条目。</p>
+
+      <h2 id="extended">扩展阅读</h2>
+      <p>详细了解随机森林，请参考文章《一文看懂随机森林》。</p>
     </div>
+
+    <!-- 评论区 -->
+    <div class="comment-box">
+      <h3>发表评论</h3>
+      <input type="text" id="username" placeholder="请输入您的名字">
+      <textarea id="comment" placeholder="请输入您的评论" rows="4"></textarea>
+      <button onclick="submitComment()">提交评论</button>
+    </div>
+    <div class="comment-list" id="commentList"></div>
   </div>
 
+  <!-- 页脚 -->
   <footer>
-    <p>&copy; 2025 AI技术团队. All Rights Reserved.</p>
+    <p>&copy; 2025 AI知识库. All Rights Reserved.</p>
   </footer>
 
   <script>
-    // 动态加载导航栏
-    function loadNavbar() {
-      const navbarContainer = document.getElementById('navbar-container');
-      fetch('../navbar.html')
-        .then(response => response.text())
-        .then(data => {
-          navbarContainer.innerHTML = data;
-        })
-        .catch(err => console.error('加载导航栏失败', err));
-    }
-    loadNavbar();
+    // 动态加载导航栏，使用 fetch 方式（确保使用本地服务器访问页面，否则可能因跨域问题失败）
+    fetch('../navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      })
+      .catch(err => console.error('加载导航栏失败：', err));
 
     // 切换深色/浅色模式
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
 
-    // 目录平滑滚动
+    // 目录平滑滚动功能
     document.querySelectorAll('.toc a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -85,6 +152,24 @@
         document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
       });
     });
+
+    // 评论功能
+    function submitComment() {
+      const username = document.getElementById('username').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if (!username || !comment) {
+        alert('请填写您的名字和评论内容');
+        return;
+      }
+      const commentList = document.getElementById('commentList');
+      const newComment = document.createElement('div');
+      newComment.innerHTML = `<strong>${username}</strong><p>${comment}</p>`;
+      commentList.appendChild(newComment);
+      
+      // 清空输入框
+      document.getElementById('username').value = '';
+      document.getElementById('comment').value = '';
+    }
   </script>
 </body>
 </html>

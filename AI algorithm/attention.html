@@ -4,176 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Attention 机制介绍 - AI知识库</title>
-  <link rel="icon" href="D:\桌面\cdu\web\images\logo.png" type="image/png">
+  <link rel="icon" href="../images/logo.png" type="image/png">
   <!-- 引入 Font Awesome（可选，用于图标） -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+  <!-- 引入全局样式文件 -->
+  <link rel="stylesheet" href="../css/styles.css">
   <style>
-    :root {
-      --primary-color: #007bff;
-      --secondary-color: #30cfd0;
-      --footer-bg: #1a1a1a;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Microsoft YaHei', sans-serif;
-    }
-    body {
-      background: #f0f2f5;
-      color: #333;
-      line-height: 1.6;
-    }
-    /* 导航栏 */
-    .navbar {
-      display: flex;
-      align-items: center;
-      padding: 0 5%;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      margin-right: 3rem;
-    }
-    .nav-brand img {
-      height: 40px;
-      transition: transform 0.3s;
-    }
-    .nav-brand img:hover {
-      transform: scale(1.05);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      flex-grow: 1;
-    }
-    .nav-links a {
-      color: #333;
-      text-decoration: none;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: var(--primary-color);
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .user-info a img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-left: 10px;
-    }
-    /* 主体容器 */
-    .container {
-      max-width: 1100px;
-      margin: 120px auto 50px; /* 顶部预留固定导航空间 */
-      background: #fff;
-      padding: 30px 40px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    /* 文章头部 */
-    .article-header {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .article-header h1 {
-      font-size: 32px;
-      color: var(--primary-color);
-      margin-bottom: 10px;
-    }
-    .article-meta {
-      font-size: 14px;
-      color: #777;
-    }
-    /* 目录 */
-    .toc {
-      margin: 20px 0;
-      padding: 15px;
-      background: #f9f9f9;
-      border-left: 4px solid var(--primary-color);
-    }
-    .toc h4 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    .toc ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    .toc ul li {
-      margin-bottom: 8px;
-    }
-    .toc ul li a {
-      color: var(--primary-color);
-      font-size: 14px;
-    }
-    /* 文章内容 */
-    .article-content p {
-      margin-bottom: 16px;
-      text-indent: 2em;
-      font-size: 16px;
-    }
-    .article-content h2, .article-content h3 {
-      margin: 20px 0 10px;
-      color: #222;
-    }
-    .article-content img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-    }
-    /* 页脚 */
-    footer {
-      background: var(--footer-bg);
-      color: #e0e0e0;
-      text-align: center;
-      padding: 20px 5%;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .container {
-        margin: 120px 10px 50px;
-        padding: 20px;
-      }
-    }
+    /* 如果需要局部覆盖样式，可以在这里添加 */
   </style>
 </head>
 <body>
-  <!-- 导航栏 -->
-  <nav class="navbar">
-    <a class="nav-brand" href="index.html">
-      <img src="D:\桌面\cdu\web\images\logo.png" alt="AI知识库">
-    </a>
-    <ul class="nav-links">
-      <li><a href="D:\桌面\cdu\web\index.html">首页</a></li>
-      <li><a href="D:\桌面\cdu\web\knowledge.html">AI 知识库</a></li>
-      <li><a href="#">AI 新闻</a></li>
-      <li><a href="#">友情链接</a></li>
-    </ul>
-    <div class="user-info">
-      <a href="D:\桌面\cdu\web\login.html">
-        <img src="D:\桌面\cdu\web\images/user.webp" alt="默认头像">
-      </a>
-    </div>
-  </nav>
+  <!-- 动态加载导航栏 -->
+  <div id="navbar-container"></div>
 
   <!-- 主体文章容器 -->
   <div class="container">
@@ -182,7 +24,8 @@
       <h1>Attention 机制介绍</h1>
       <div class="article-meta">发布时间：2025-03-21 | 作者：AI上智能团队 | 阅读量：420</div>
     </div>
-    <!-- 目录 -->
+
+    <!-- 文章目录 -->
     <div class="toc">
       <h4>文章目录</h4>
       <ul>
@@ -192,64 +35,136 @@
         <li><a href="#types">Attention 的 N 种类型</a></li>
       </ul>
     </div>
+
     <!-- 文章内容 -->
     <div class="article-content">
+      <p><strong>一文看懂 Attention 机制</strong></p>
+      <p>
+        Attention 正在被越来越广泛地得到应用，尤其是 BERT 火爆之后。Attention 到底有什么特别之处？它的原理和本质是什么？Attention 都有哪些类型？本文将详细讲解 Attention 的方方面面。
+      </p>
+      <p>
+        想要了解更多 NLP 相关的内容，请访问 <em>NLP 专题</em>，免费提供 59 页的 NLP 文档下载。
+      </p>
+      
       <h2 id="essence">Attention 的本质是什么</h2>
-      <p>Attention 正在被越来越广泛地应用，尤其是 BERT 火爆之后。</p>
-      <p>Attention 到底有什么特别之处？它的原理和本质是什么？Attention 都有哪些类型？本文将详细讲解 Attention 的方方面面。</p>
-      <p>如果浅层理解，Attention（注意力）机制与其名字非常匹配，其核心逻辑就是“从关注全部到关注重点”。</p>
-      <p>Attention 机制很像人类看图片的逻辑：当我们看一张图片时，并不看清全部内容，而是将注意力集中在焦点上。例如，我们一定会看清“锦江饭店”这4个字（视觉焦点），而“电话号码”或“喜运来大酒家”则容易被忽略。也就是说，我们的视觉系统本质上就是一种 Attention 机制，通过将有限的注意力集中在重点信息上，快速获得最有效的信息。</p>
-      <p>在 AI 领域，Attention 机制最早应用于计算机视觉，随后在 NLP 领域得到发扬光大。2018 年 BERT 和 GPT 的出色效果使得 Transformer 以及其中的 Attention 核心备受关注。</p>
+      <p>
+        如果浅层理解，Attention（注意力）机制与其名字非常匹配，其核心逻辑就是“从关注全部到关注重点”。Attention 机制很像人类看图片的逻辑：当我们看一张图片时，并不看清图片的全部内容，而是将注意力集中在焦点上。
+      </p>
+      <p>
+        例如，当我们看一张图片时，一定会看清“锦江饭店”这4个字（视觉焦点），而“电话号码”或“喜运来大酒家”则容易被忽略。也就是说，我们的视觉系统本质上就是一种 Attention 机制，通过将有限的注意力集中在重点信息上，快速获得最有效的信息。
+      </p>
+      <p>
+        在 AI 领域，Attention 机制最早应用于计算机视觉，随后在 NLP 领域得到发扬光大。2018 年 BERT 和 GPT 的出色效果使得 Transformer 以及其中的 Attention 核心备受关注。
+      </p>
       <p>【Attention 位置示意图】</p>
       
       <h2 id="advantages">Attention 的3大优点</h2>
       <p>引入 Attention 机制主要有三个原因：</p>
-      <p><strong>参数少：</strong>与 CNN、RNN 相比，Attention 模型的复杂度更低，参数更少，对算力要求更小。</p>
-      <p><strong>速度快：</strong>Attention 解决了 RNN 不能并行计算的问题，其每一步计算不依赖于上一步结果，因此可以并行处理。</p>
-      <p><strong>效果好：</strong>在 Attention 机制出现之前，长距离信息容易被弱化，类似于记忆力差的人无法记住过去的事情。而 Attention 能够挑选重点，即使文本较长，也能抓住核心信息，不丢失重要内容。【下图示意：红色区域为被挑选出的重点】</p>
+      <p><strong>参数少：</strong>与 CNN、RNN 相比，Attention 模型的复杂度更低，参数也更少，对算力要求更小。</p>
+      <p><strong>速度快：</strong>Attention 解决了 RNN 不能并行计算的问题，每一步计算不依赖于上一步结果，因此可以并行处理。</p>
+      <p><strong>效果好：</strong>在 Attention 机制出现之前，长距离信息容易被弱化，就像记忆力差的人记不住过去的事情一样。而 Attention 能够挑选重点，即使文本较长，也能抓住核心信息，不丢失重要内容。【下图示意：红色区域为被挑选出的重点】</p>
       
       <h2 id="principle">Attention 的原理</h2>
-      <p>Attention 经常与 Encoder–Decoder 结构联系在一起，用于机器翻译等任务。下面动图演示了在 Encoder–Decoder 框架下，Attention 如何帮助完成机器翻译任务。（动图示意）</p>
-      <p>但是，Attention 并不一定要依附于 Encoder–Decoder，它可以脱离该框架。下图为脱离 Encoder–Decoder 框架后的 Attention 原理图解。（示意图）</p>
-      <p>为了更形象地说明 Attention 的原理，我们通过一个例子来讲解：</p>
-      <p>假设图书馆中有很多书（value），每本书都有编号（key）。当我们想了解“漫威”（query）时，我们会优先关注与动漫、电影相关的书籍，这些书籍的权重较高，而其他与“二战”相关的书籍权重较低。经过这样的加权，最终我们能对“漫威”有全面了解。</p>
-      <p>Attention 原理可归纳为3步：</p>
-      <p>1. Query 与 Key 计算相似度，得到权值；</p>
-      <p>2. 将权值归一化，得到可用权重；</p>
-      <p>3. 用权重对 Value 进行加权求和，得到最终输出。</p>
-      <p>简单来说，Attention 的核心就是“带权求和”，这一机制帮助模型捕捉关键信息。</p>
+      <p>
+        Attention 常与 Encoder–Decoder 结构联系在一起，用于机器翻译等任务。下面的动图演示了在 Encoder–Decoder 框架下，Attention 如何帮助完成机器翻译任务。（动图示意）
+      </p>
+      <p>
+        但是，Attention 并不一定要依附于 Encoder–Decoder，它也可以脱离该框架。下图为脱离 Encoder–Decoder 框架后的 Attention 原理图解。（示意图）
+      </p>
+      <p>
+        为了更形象地说明 Attention 的原理，我们举一个例子：假设图书馆中有很多书（value），每本书都有编号（key）。当我们想了解“漫威”（query）时，我们会优先关注与动漫、电影相关的书籍（权重高），而与“二战”相关的书籍（权重低）则只需要简单浏览。经过这样的加权，我们最终能对“漫威”有全面了解。
+      </p>
+      <p>
+        Attention 原理可归纳为3步：<br>
+        1. Query 与 Key 计算相似度，得到权值；<br>
+        2. 将权值归一化，得到可用权重；<br>
+        3. 用权重对 Value 进行加权求和，得到最终输出。
+      </p>
+      <p>
+        简单来说，Attention 的核心就是“带权求和”，这一机制帮助模型捕捉关键信息。
+      </p>
       
       <h2 id="types">Attention 的 N 种类型</h2>
-      <p>Attention 有很多种不同的类型，包括 Soft Attention、Hard Attention、静态 Attention、动态 Attention、Self Attention 等。下面对这些 Attention 进行归类：</p>
+      <p>
+        Attention 有多种不同类型，包括 Soft Attention、Hard Attention、静态 Attention、动态 Attention、Self Attention 等。以下按照不同角度对 Attention 进行归类：
+      </p>
       <h3>1. 计算区域</h3>
-      <p>• <strong>Soft Attention：</strong> 对所有 Key 求权重，每个 Key 均有对应权重，是全局计算（Global Attention）；</p>
-      <p>• <strong>Hard Attention：</strong> 精确定位某个 Key，其余 Key 权重为 0，通常需要强化学习或 gumbel softmax 辅助训练；</p>
-      <p>• <strong>Local Attention：</strong> 在局部窗口内进行计算，是 Soft 和 Hard 的折中。</p>
+      <p>• <strong>Soft Attention：</strong> 对所有 Key 求权重，每个 Key 都有一个对应的权重，属于全局计算（Global Attention）。这种方式参考所有 Key 后进行加权，但计算量较大。</p>
+      <p>• <strong>Hard Attention：</strong> 精确定位某个 Key，其余 Key 权重为 0。通常需要强化学习或使用 gumbel softmax 辅助训练，因为其不可导。</p>
+      <p>• <strong>Local Attention：</strong> 是 Soft 与 Hard 的折中方案，在一个局部窗口内计算 Attention。</p>
       
       <h3>2. 所用信息</h3>
       <p>• <strong>General Attention：</strong> 利用外部信息（例如问题向量）与原文本进行对齐；</p>
-      <p>• <strong>Local Attention：</strong> 仅使用内部信息进行计算，如 Self-Attention。</p>
+      <p>• <strong>Local Attention：</strong> 只使用内部信息进行计算，如 Self-Attention，key、value 与 query 均来自输入文本。</p>
       
       <h3>3. 结构层次</h3>
       <p>• <strong>单层 Attention：</strong> 用单个 Query 对文本进行一次 Attention；</p>
-      <p>• <strong>多层 Attention：</strong> 先对每个句子计算 Attention 得到句向量，再对句向量计算 Attention 得到文档向量；</p>
-      <p>• <strong>多头 Attention：</strong> 使用多个 Query 分别计算 Attention，每个 Query 关注文本的不同部分，最后拼接结果。</p>
+      <p>• <strong>多层 Attention：</strong> 先对每个句子计算 Attention 得到句向量，再对所有句向量计算 Attention 得到文档向量；</p>
+      <p>• <strong>多头 Attention：</strong> 使用多个 Query 分别计算 Attention，每个 Query 关注文本不同部分，最后拼接结果。</p>
       
       <h3>4. 模型方面</h3>
       <p>• <strong>CNN + Attention：</strong> 可在卷积操作前、后或 pooling 层加入 Attention；</p>
       <p>• <strong>LSTM + Attention：</strong> 在 LSTM 上结合 Attention 提升长文本建模效果；</p>
-      <p>• <strong>纯 Attention：</strong> 如 Transformer 中的多头 Attention，不依赖 CNN 或 RNN。</p>
+      <p>• <strong>纯 Attention：</strong> 如 Transformer 中的多头 Attention，不依赖于 CNN 或 RNN。</p>
       
       <h3>5. 相似度计算方式</h3>
-      <p>常用方法包括点乘、矩阵相乘、cos 相似度、串联以及使用多层感知机等方法进行计算。</p>
-      
+      <p>常用方法包括：点乘、矩阵相乘、cos 相似度、串联方式以及使用多层感知机进行计算。</p>
       <p>想了解更多技术细节，请参考相关文章和视频资料，如李宏毅关于 Transformer 的讲解。</p>
     </div>
+
+    <!-- 评论区 -->
+    <div class="comment-box">
+      <h3>发表评论</h3>
+      <input type="text" id="username" placeholder="请输入您的名字">
+      <textarea id="comment" placeholder="请输入您的评论" rows="4"></textarea>
+      <button onclick="submitComment()">提交评论</button>
+    </div>
+    <div class="comment-list" id="commentList"></div>
   </div>
 
   <!-- 页脚 -->
   <footer>
-    <p>&copy; 2025 AI上智能. All Rights Reserved.</p>
+    <p>&copy; 2025 AI知识库. All Rights Reserved.</p>
   </footer>
+
+  <script>
+    // 动态加载导航栏（确保在本地服务器环境下测试，否则可能会因文件协议问题加载失败）
+    fetch('../navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      })
+      .catch(err => console.error('加载导航栏失败：', err));
+
+    // 切换深色/浅色模式
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // 目录平滑滚动功能
+    document.querySelectorAll('.toc a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // 评论功能
+    function submitComment() {
+      const username = document.getElementById('username').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if (!username || !comment) {
+        alert('请填写您的名字和评论内容');
+        return;
+      }
+      const commentList = document.getElementById('commentList');
+      const newComment = document.createElement('div');
+      newComment.innerHTML = `<strong>${username}</strong><p>${comment}</p>`;
+      commentList.appendChild(newComment);
+      document.getElementById('username').value = '';
+      document.getElementById('comment').value = '';
+    }
+  </script>
 </body>
 </html>

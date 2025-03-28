@@ -3,302 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>一文看懂卷积神经网络 (CNN)</title>
-  <link rel="icon" href="D:\桌面\cdu\web\images\logo.png" type="image/png">
+  <title>卷积神经网络 – CNN - AI知识库</title>
+  <link rel="icon" href="../images/logo.png" type="image/png">
   <!-- 引入 Font Awesome（可选，用于图标） -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  
+  <!-- 引入全局样式 -->
+  <link rel="stylesheet" href="../css/styles.css">
   <style>
-    :root {
-      --primary-color: #007bff;
-      --secondary-color: #30cfd0;
-      --footer-bg: #1a1a1a;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Microsoft YaHei', sans-serif;
-    }
-    body {
-      background: #f0f2f5;
-      color: #333;
-      line-height: 1.6;
-    }
-    /* 导航栏 */
-    .navbar {
-      display: flex;
-      align-items: center;
-      padding: 0 5%;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      margin-right: 3rem;
-    }
-    .nav-brand img {
-      height: 40px;
-      transition: transform 0.3s;
-    }
-    .nav-brand img:hover {
-      transform: scale(1.05);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      flex-grow: 1;
-    }
-    .nav-links a {
-      color: #333;
-      text-decoration: none;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: var(--primary-color);
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .user-info a img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-left: 10px;
-    }
-    /* 主体容器 */
-    .container {
-      max-width: 1100px;
-      margin: 120px auto 50px; /* 顶部留出固定导航的空间 */
-      background: #fff;
-      padding: 30px 40px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    /* 文章头部 */
-    .article-header {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .article-header h1 {
-      font-size: 32px;
-      color: var(--primary-color);
-      margin-bottom: 10px;
-    }
-    .article-meta {
-      font-size: 14px;
-      color: #777;
-    }
-    /* 目录 */
-    .toc {
-      margin: 20px 0;
-      padding: 15px;
-      background: #f9f9f9;
-      border-left: 4px solid var(--primary-color);
-    }
-    .toc h4 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    .toc ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    .toc ul li {
-      margin-bottom: 8px;
-    }
-    .toc ul li a {
-      color: var(--primary-color);
-      font-size: 14px;
-    }
-    /* 文章内容 */
-    .article-content p {
-      margin-bottom: 16px;
-      text-indent: 2em;
-      font-size: 16px;
-    }
-    .article-content h2, .article-content h3 {
-      margin: 20px 0 10px;
-      color: #222;
-    }
-    .article-content img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-    }
-    /* 页脚 */
-    footer {
-      background: var(--footer-bg);
-      color: #e0e0e0;
-      text-align: center;
-      padding: 20px 5%;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .container {
-        margin: 120px 10px 50px;
-        padding: 20px;
-      }
-    }
+    /* 如有需要可在此添加局部样式覆盖 */
   </style>
 </head>
 <body>
-  <!-- 导航栏 -->
-  <nav class="navbar">
-    <a class="nav-brand" href="index.html">
-      <img src="D:\桌面\cdu\web\images/logo.png" alt="AI知识库">
-    </a>
-    <ul class="nav-links">
-      <li><a href="D:\桌面\cdu\web\index.html">首页</a></li>
-      <li><a href="D:\桌面\cdu\web\knowledge.html">AI 知识库</a></li>
-      <li><a href="#">AI 新闻</a></li>
-      <li><a href="#">友情链接</a></li>
-    </ul>
-    <div class="user-info">
-      <a href="D:\桌面\cdu\web\login.html">
-        <img src="D:\桌面\cdu\web\images/user.webp" alt="默认头像">
-      </a>
-    </div>
-  </nav>
+  <!-- 动态加载导航栏 -->
+  <div id="navbar-container"></div>
 
   <!-- 主体文章容器 -->
   <div class="container">
     <!-- 文章头部 -->
     <div class="article-header">
-      <h1>一文看懂卷积神经网络 (CNN)</h1>
-      <div class="article-meta">发布时间：2025-03-21 | 作者：AI上智能团队 | 阅读量：350</div>
+      <h1>卷积神经网络 – CNN</h1>
+      <div class="article-meta">更新时间：2025-03-21 | 阅读量：350</div>
     </div>
-    <!-- 目录 -->
+
+    <!-- 文章目录 -->
     <div class="toc">
       <h4>文章目录</h4>
       <ul>
-        <li><a href="#intro">CNN简介</a></li>
-        <li><a href="#problem">CNN解决的问题</a></li>
-        <li><a href="#principle">基本原理</a></li>
-        <li><a href="#application">实际应用</a></li>
-        <li><a href="#summary">总结</a></li>
+        <li><a href="#what">CNN 解决了什么问题？</a></li>
+        <li><a href="#vision">人类的视觉原理</a></li>
+        <li><a href="#principle">卷积神经网络-CNN 的基本原理</a></li>
+        <li><a href="#application">CNN 有哪些实际应用？</a></li>
+        <li><a href="#reference">百度百科+维基百科</a></li>
+        <li><a href="#extended">扩展阅读</a></li>
       </ul>
     </div>
+
     <!-- 文章内容 -->
     <div class="article-content">
-      <!-- CNN简介 -->
-      <h2 id="intro">CNN简介</h2>
-      <p>卷积神经网络 – CNN 最擅长的就是图片的处理。它受到人类视觉神经系统的启发。</p>
-      <p>CNN 有2大特点：</p>
-      <p>1. 能够有效的将大数据量的图片降维成小数据量</p>
-      <p>2. 能够有效的保留图片特征，符合图片处理的原则</p>
-      <p>目前 CNN 已经得到了广泛的应用，比如：人脸识别、自动驾驶、美图秀秀、安防等很多领域。</p>
+      <p><strong>一文看懂卷积神经网络-CNN</strong></p>
+      <p>
+        卷积神经网络 – CNN 最擅长的就是图片的处理。它受到人类视觉神经系统的启发。<br>
+        CNN 有2大特点：<br>
+        ① 能够有效地将大数据量的图片降维成小数据量<br>
+        ② 能够有效地保留图片特征，符合图片处理的原则<br>
+        目前 CNN 已经得到了广泛的应用，比如：人脸识别、自动驾驶、美图秀秀、安防等很多领域。
+      </p>
       
-      <!-- CNN解决的问题 -->
-      <h2 id="problem">CNN解决的问题</h2>
-      <p>在 CNN 出现之前，图像对于人工智能来说是一个难题，有2个原因：</p>
-      <p>1. 图像需要处理的数据量太大，导致成本很高，效率很低</p>
-      <p>2. 图像在数字化的过程中很难保留原有的特征，导致图像处理的准确率不高</p>
-      <p>下面就详细说明一下这2个问题：</p>
-      <h3>需要处理的数据量太大</h3>
-      <p>图像是由像素构成的，每个像素又是由颜色构成的。</p>
-      <p>现在随随便便一张图片都是 1000×1000 像素以上的，每个像素都有RGB 3个参数来表示颜色信息。</p>
-      <p>假如我们处理一张 1000×1000 像素的图片，我们就需要处理3百万个参数！</p>
-      <p>1000×1000×3=3,000,000</p>
-      <p>这么大量的数据处理起来是非常消耗资源的，而且这只是一张不算太大的图片！</p>
-      <p>卷积神经网络 – CNN 解决的第一个问题就是“将复杂问题简化”，把大量参数降维成少量参数，再做处理。</p>
-      <p>更重要的是：我们在大部分场景下，降维并不会影响结果。比如1000像素的图片缩小成200像素，并不影响肉眼认出来图片中是一只猫还是一只狗，机器也是如此。</p>
-      
-      <h3>保留图像特征</h3>
-      <p>图片数字化的传统方式我们简化一下，就类似下图的过程：</p>
-      <p>（图像简单数字化无法保留图像特征）</p>
-      <p>假如有圆形是1，没有圆形是0，那么圆形的位置不同就会产生完全不同的数据表达。但是从视觉的角度来看，图像的内容（本质）并没有发生变化，只是位置发生了变化。</p>
-      <p>所以当我们移动图像中的物体，用传统的方式得出来的参数会差异很大！这是不符合图像处理的要求的。</p>
-      <p>而 CNN 解决了这个问题，它用类似视觉的方式保留了图像的特征，当图像做翻转、旋转或者变换位置时，它也能有效识别出相似的图像。</p>
-      
-      <!-- 人类的视觉原理 -->
-      <h2 id="principle">基本原理</h2>
-      <h3>人类的视觉原理</h3>
-      <p>深度学习的许多研究成果，离不开对大脑认知原理的研究，尤其是视觉原理的研究。</p>
-      <p>1981 年的诺贝尔医学奖，颁发给了 David Hubel（出生于加拿大的美国神经生物学家）和 Torsten Wiesel，以及 Roger Sperry。前两位的主要贡献，是“发现了视觉系统的信息处理”，可视皮层是分级的。</p>
-      <p>人类的视觉原理如下：从原始信号摄入开始（瞳孔摄入像素 Pixels），接着做初步处理（大脑皮层某些细胞发现边缘和方向），然后抽象（大脑判定眼前物体的形状，是圆形的），再进一步抽象（大脑进一步判定该物体是只气球）。</p>
-      <p>下面是人脑进行人脸识别的一个示例：<em>（人类视觉原理示意图）</em></p>
-      <p>对于不同的物体，人类视觉也是通过逐层分级来进行认知的：</p>
-      <p>（人类视觉原理示意图2）</p>
-      <p>我们可以看到，在最底层特征基本上是类似的，就是各种边缘；越往上，越能提取出此类物体的一些特征（例如轮子、眼睛、躯干等）；到最上层，不同的高级特征最终组合成相应的图像，从而能够让人类准确区分不同物体。</p>
-      <p>那么我们可以很自然地想到：是否可以模仿人类大脑的这个特点，构造多层神经网络，较低层识别初级图像特征，若干底层特征组成更高层特征，最终通过多个层级组合，在顶层做出分类？答案是肯定的，这也是许多深度学习算法（包括CNN）的灵感来源。</p>
-      
-      <h3>CNN的基本原理</h3>
-      <p>典型的 CNN 由3个部分构成：</p>
-      <p>1. 卷积层</p>
-      <p>2. 池化层</p>
-      <p>3. 全连接层</p>
-      <p>简单来说：</p>
-      <p>卷积层负责提取图像中的局部特征；池化层用于大幅降低参数量（降维）；全连接层类似于传统神经网络，用于输出所需结果。</p>
-      <p>下面的原理解释为了通俗易懂，忽略了很多技术细节，如果对详细原理感兴趣，可以参考相关视频《卷积神经网络基础》。</p>
-      
-      <h3>卷积——提取特征</h3>
-      <p>卷积层的运算过程如下图，用一个卷积核扫描整张图片：</p>
-      <p>（卷积层运算过程示意图）</p>
-      <p>这个过程可以理解为：使用一个过滤器（卷积核）来过滤图像的各个小区域，从而得到这些区域的特征值。</p>
-      <p>在实际应用中，通常使用多个卷积核，每个卷积核代表一种图像模式。如果某图像块与某卷积核卷积后输出值较大，则说明该图像块与该卷积核所代表的模式相似。举例来说，如果设计6个卷积核，可以认为图像上有6种底层纹理模式，即用6种基础模式就能描绘出整幅图像。</p>
-      <p>（25种不同的卷积核示意图）</p>
-      <p>总结：卷积层通过卷积核的过滤，提取出图像局部特征，与人类视觉提取特征类似。</p>
-      
-      <h3>池化层（下采样）——数据降维，避免过拟合</h3>
-      <p>池化层，简单来说，就是对图像进行下采样，能大幅降低数据维度。其过程如下：</p>
-      <p>（池化层过程示意图）</p>
-      <p>上图示意：原始图像尺寸为20×20，通过10×10的采样窗口下采样后，最终变为2×2大小的特征图。</p>
-      <p>之所以这么做，是因为即使经过卷积，图像尺寸仍然较大（卷积核尺寸较小），为了降低计算量，必须进行降维处理。</p>
-      <p>总结：池化层能更有效地降低数据维度，既减少计算量，也能有效避免过拟合。</p>
-      
-      <h3>全连接层——输出结果</h3>
-      <p>这是最后一步：经过卷积层和池化层处理后的数据，输入全连接层得到最终输出结果。</p>
-      <p>只有经过降维处理的数据，全连接层才能“跑得动”，否则数据量太大，计算成本高且效率低下。</p>
-      <p>（全连接层示意图）</p>
-      <p>需要注意的是，典型的 CNN 不仅仅包含上述3层，而是多层结构，例如 LeNet-5 的结构为：卷积层 – 池化层 – 卷积层 – 池化层 – 卷积层 – 全连接层。</p>
-      <p>（LeNet-5网络结构示意图）</p>
-      
-      <!-- 实际应用 -->
-      <h2 id="application">实际应用</h2>
-      <p>CNN 在图像处理方面表现卓越，由于视频是图像的连续叠加，CNN 同样擅长处理视频内容。下面列举一些成熟的应用：</p>
-      <p><strong>图像分类、检索：</strong> 能够有效地对图像进行分类，节省大量人工成本，对特定领域图片的分类准确率可达95%以上（例如图像搜索）。</p>
-      <p><strong>目标定位检测：</strong> 能够在图像中定位目标，并确定其位置及大小，典型应用包括自动驾驶、安防、医疗等领域。</p>
-      <p><strong>目标分割：</strong> 简单来说，即像素级分类。可以对图像中的前景和背景进行像素级区分，进一步可实现目标识别和分类，应用于美图秀秀、视频后期加工、图像生成等。</p>
-      <p><strong>人脸识别：</strong> 作为广泛普及的应用，CNN 在安防、金融和生活中都有应用。</p>
-      <p><strong>骨骼识别：</strong> 能够识别人体关键骨骼并追踪动作，应用于安防、电影、图像视频生成和游戏等领域。</p>
-      
-      <!-- 总结 -->
-      <h2 id="summary">总结</h2>
-      <p>今天我们介绍了 CNN 的价值、基本原理和应用场景，简单总结如下：</p>
-      <p><strong>CNN 的价值：</strong></p>
-      <p>• 能够将大数据量的图片有效地降维成小数据量（且不影响结果）</p>
-      <p>• 能够保留图片的特征，类似于人类的视觉原理</p>
-      <p><strong>CNN 的基本原理：</strong></p>
-      <p>• 卷积层 – 主要作用是提取和保留图片的局部特征</p>
-      <p>• 池化层 – 主要作用是降低数据维度，有效避免过拟合</p>
-      <p>• 全连接层 – 根据不同任务输出最终结果</p>
-      <p><strong>CNN 的实际应用：</strong></p>
-      <p>• 图片分类、检索</p>
-      <p>• 目标定位检测</p>
-      <p>• 目标分割</p>
-      <p>• 人脸识别</p>
-      <p>• 骨骼识别</p>
+      <h2 id="what">CNN 解决了什么问题？</h2>
+      <p>
+        在 CNN 出现之前，图像对于人工智能来说是一个难题，原因主要有两个：<br>
+        ① 图像需要处理的数据量太大，导致成本高、效率低；<br>
+        ② 图像在数字化过程中难以保留原有特征，导致图像处理准确率低。<br>
+        为解决这些问题，CNN 将大量参数降维为少量参数，而降维不会影响结果（例如将 1000×1000 的图片缩小到 200×200）。
+      </p>
+
+      <h2 id="vision">人类的视觉原理</h2>
+      <p>
+        深度学习许多研究成果来源于大脑认知原理，尤其是视觉系统的研究。<br>
+        1981 年诺贝尔医学奖颁给了 David Hubel、Torsten Wiesel 和 Roger Sperry，表彰他们在视觉信息处理方面的发现。<br>
+        人类视觉原理大致为：<br>
+        - 从原始信号摄入（瞳孔摄入像素）<br>
+        - 初步处理（大脑皮层细胞检测边缘与方向）<br>
+        - 抽象（大脑判定物体形状，如圆形）<br>
+        - 进一步抽象（大脑判定物体为某个具体对象，如气球）<br>
+        例如，人脑在识别人脸时是逐层提取特征，从边缘到眼睛、轮廓等，最终组合成完整人脸。
+      </p>
+      <p>【人类视觉原理示意图】</p>
+
+      <h2 id="principle">卷积神经网络-CNN 的基本原理</h2>
+      <p>
+        典型的 CNN 由3个部分构成：<br>
+        ① 卷积层：负责提取图像中的局部特征<br>
+        ② 池化层：大幅降低参数量（降维），避免过拟合<br>
+        ③ 全连接层：类似传统神经网络，用于输出最终结果<br>
+        例如，LeNet-5 网络结构就是卷积层–池化层–卷积层–池化层–卷积层–全连接层的组合。
+      </p>
+      <p>【卷积层运算过程示意图】</p>
+      <p>【池化层过程示意图】</p>
+      <p>【全连接层示意图】</p>
+      <p>【LeNet-5 网络结构示意图】</p>
+
+      <h2 id="application">CNN 有哪些实际应用？</h2>
+      <p>
+        CNN 在图像处理方面表现卓越，视频作为图像的连续叠加，CNN 同样擅长处理视频。常见应用包括：
+      </p>
+      <ul>
+        <li><strong>图像分类、检索：</strong>节省大量人工成本，对图像分类准确率可达95%+。</li>
+        <li><strong>目标定位检测：</strong>在图像中定位目标及其位置和大小，应用于自动驾驶、安防、医疗等。</li>
+        <li><strong>目标分割：</strong>进行像素级分类，将前景和背景分离，并可识别目标类别，应用于美图秀秀、视频后期加工等。</li>
+        <li><strong>人脸识别：</strong>广泛应用于安防、金融和日常生活。</li>
+        <li><strong>骨骼识别：</strong>识别人体关键骨骼并追踪动作，应用于电影、游戏等。</li>
+      </ul>
+
+      <h2 id="reference">百度百科+维基百科</h2>
+      <p>更多详情请参考百度百科和维基百科相关条目。</p>
+
+      <h2 id="extended">扩展阅读</h2>
+      <p>详细了解 CNN，请参考文章《一文看懂卷积神经网络-CNN》。</p>
     </div>
+
+    <!-- 评论区 -->
+    <div class="comment-box">
+      <h3>发表评论</h3>
+      <input type="text" id="username" placeholder="请输入您的名字">
+      <textarea id="comment" placeholder="请输入您的评论" rows="4"></textarea>
+      <button onclick="submitComment()">提交评论</button>
+    </div>
+    <div class="comment-list" id="commentList"></div>
   </div>
 
   <!-- 页脚 -->
   <footer>
-    <p>&copy; 2025 AI上智能. All Rights Reserved.</p>
+    <p>&copy; 2025 AI知识库. All Rights Reserved.</p>
   </footer>
+
+  <script>
+    // 动态加载导航栏（确保在本地服务器环境下运行） 
+    fetch('../navbar.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      })
+      .catch(err => console.error('加载导航栏失败：', err));
+
+    // 切换深色/浅色模式
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    // 目录平滑滚动功能
+    document.querySelectorAll('.toc a').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // 评论功能
+    function submitComment() {
+      const username = document.getElementById('username').value.trim();
+      const comment = document.getElementById('comment').value.trim();
+      if (!username || !comment) {
+        alert('请填写您的名字和评论内容');
+        return;
+      }
+      const commentList = document.getElementById('commentList');
+      const newComment = document.createElement('div');
+      newComment.innerHTML = `<strong>${username}</strong><p>${comment}</p>`;
+      commentList.appendChild(newComment);
+      document.getElementById('username').value = '';
+      document.getElementById('comment').value = '';
+    }
+  </script>
 </body>
 </html>
