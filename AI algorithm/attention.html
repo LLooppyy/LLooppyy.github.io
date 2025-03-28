@@ -7,172 +7,12 @@
   <link rel="icon" href="D:\桌面\cdu\web\images\logo.png" type="image/png">
   <!-- 引入 Font Awesome（可选，用于图标） -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    :root {
-      --primary-color: #007bff;
-      --secondary-color: #30cfd0;
-      --footer-bg: #1a1a1a;
-    }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Microsoft YaHei', sans-serif;
-    }
-    body {
-      background: #f0f2f5;
-      color: #333;
-      line-height: 1.6;
-    }
-    /* 导航栏 */
-    .navbar {
-      display: flex;
-      align-items: center;
-      padding: 0 5%;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      margin-right: 3rem;
-    }
-    .nav-brand img {
-      height: 40px;
-      transition: transform 0.3s;
-    }
-    .nav-brand img:hover {
-      transform: scale(1.05);
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-      flex-grow: 1;
-    }
-    .nav-links a {
-      color: #333;
-      text-decoration: none;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover {
-      color: var(--primary-color);
-    }
-    .user-info {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-    .user-info a img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-left: 10px;
-    }
-    /* 主体容器 */
-    .container {
-      max-width: 1100px;
-      margin: 120px auto 50px; /* 顶部预留固定导航空间 */
-      background: #fff;
-      padding: 30px 40px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    /* 文章头部 */
-    .article-header {
-      margin-bottom: 20px;
-      text-align: center;
-    }
-    .article-header h1 {
-      font-size: 32px;
-      color: var(--primary-color);
-      margin-bottom: 10px;
-    }
-    .article-meta {
-      font-size: 14px;
-      color: #777;
-    }
-    /* 目录 */
-    .toc {
-      margin: 20px 0;
-      padding: 15px;
-      background: #f9f9f9;
-      border-left: 4px solid var(--primary-color);
-    }
-    .toc h4 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: #333;
-    }
-    .toc ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    .toc ul li {
-      margin-bottom: 8px;
-    }
-    .toc ul li a {
-      color: var(--primary-color);
-      font-size: 14px;
-    }
-    /* 文章内容 */
-    .article-content p {
-      margin-bottom: 16px;
-      text-indent: 2em;
-      font-size: 16px;
-    }
-    .article-content h2, .article-content h3 {
-      margin: 20px 0 10px;
-      color: #222;
-    }
-    .article-content img {
-      display: block;
-      margin: 20px auto;
-      max-width: 100%;
-    }
-    /* 页脚 */
-    footer {
-      background: var(--footer-bg);
-      color: #e0e0e0;
-      text-align: center;
-      padding: 20px 5%;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-    @media (max-width: 768px) {
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .container {
-        margin: 120px 10px 50px;
-        padding: 20px;
-      }
-    }
-  </style>
+  <link rel="icon" href="../images/logo.png" type="image/png"> <!-- 修改为相对路径 -->
+  <link rel="stylesheet" href="../css/styles.css"> <!-- 修改为相对路径 -->
+
 </head>
 <body>
-  <!-- 导航栏 -->
-  <nav class="navbar">
-    <a class="nav-brand" href="index.html">
-      <img src="D:\桌面\cdu\web\images\logo.png" alt="AI知识库">
-    </a>
-    <ul class="nav-links">
-      <li><a href="D:\桌面\cdu\web\index.html">首页</a></li>
-      <li><a href="D:\桌面\cdu\web\knowledge.html">AI 知识库</a></li>
-      <li><a href="#">AI 新闻</a></li>
-      <li><a href="#">友情链接</a></li>
-    </ul>
-    <div class="user-info">
-      <a href="D:\桌面\cdu\web\login.html">
-        <img src="D:\桌面\cdu\web\images/user.webp" alt="默认头像">
-      </a>
-    </div>
-  </nav>
+  <div id="navbar-container"></div> <!-- 导航栏的位置 -->
 
   <!-- 主体文章容器 -->
   <div class="container">
@@ -250,5 +90,23 @@
   <footer>
     <p>&copy; 2025 AI上智能. All Rights Reserved.</p>
   </footer>
+  
+  <script>
+    function loadNavbar() {
+      const navbarContainer = document.getElementById('navbar-container');
+      fetch('../navbar.html') <!-- 修改为相对路径 -->
+        .then(response => response.text())
+        .then(data => {
+          navbarContainer.innerHTML = data;
+        })
+        .catch(err => console.error('加载导航栏失败', err));
+    }
+
+    loadNavbar();
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
 </body>
 </html>
