@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encoder-Decoder 和 Seq2Seq - AI知识库</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <!-- 如果需要图标，可引入 Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #30cfd0;
+      --footer-bg: #1a1a1a;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+    body {
+      background: #f0f2f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* 导航栏 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      margin-right: 3rem;
+    }
+    .nav-brand img {
+      height: 40px;
+      transition: transform 0.3s;
+    }
+    .nav-brand img:hover {
+      transform: scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-grow: 1;
+    }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .user-info a img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+    /* 主体容器 */
+    .container {
+      max-width: 1100px;
+      margin: 120px auto 50px; /* 为固定导航栏预留空间 */
+      background: #fff;
+      padding: 30px 40px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    /* 文章头部 */
+    .article-header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .article-header h1 {
+      font-size: 32px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    .article-meta {
+      font-size: 14px;
+      color: #777;
+    }
+    /* 目录 */
+    .toc {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary-color);
+    }
+    .toc h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .toc ul li {
+      margin-bottom: 8px;
+    }
+    .toc ul li a {
+      color: var(--primary-color);
+      font-size: 14px;
+      text-decoration: none;
+    }
+    .toc ul li a:hover {
+      text-decoration: underline;
+    }
+    /* 文章内容 */
+    .article-content p {
+      margin-bottom: 16px;
+      text-indent: 2em;
+      font-size: 16px;
+    }
+    .article-content h2, .article-content h3 {
+      margin: 20px 0 10px;
+      color: #222;
+    }
+    .article-content img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+    }
+    /* 页脚 */
+    footer {
+      background: var(--footer-bg);
+      color: #e0e0e0;
+      text-align: center;
+      padding: 20px 5%;
+      font-size: 14px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .container {
+        margin: 120px 10px 50px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="images/logo.png" alt="AI知识库">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="knowledge.html">AI 知识库</a></li>
+      <li><a href="#">AI 新闻</a></li>
+      <li><a href="#">友情链接</a></li>
+    </ul>
+    <div class="user-info">
+      <a href="login.html">
+        <img src="images/user.webp" alt="默认头像">
+      </a>
+    </div>
+  </nav>
+
+  <!-- 主体内容容器 -->
+  <div class="container">
+    <!-- 文章头部 -->
+    <div class="article-header">
+      <h1>Encoder-Decoder 和 Seq2Seq</h1>
+      <div class="article-meta">发布时间：2025-03-21 | 作者：AI上智能团队 | 阅读量：520</div>
+    </div>
+
+    <!-- 目录 -->
+    <div class="toc">
+      <h4>文章目录</h4>
+      <ul>
+        <li><a href="#encoder-decoder">什么是 Encoder-Decoder ？</a></li>
+        <li><a href="#seq2seq">什么是 Seq2Seq？</a></li>
+        <li><a href="#applications">Encoder-Decoder 有哪些应用？</a></li>
+        <li><a href="#defect">Encoder-Decoder 的缺陷</a></li>
+        <li><a href="#attention">Attention 解决信息丢失问题</a></li>
+      </ul>
+    </div>
+
+    <!-- 文章内容 -->
+    <div class="article-content">
+      <p><strong>一文看懂Encoder-Decoder和Seq2Seq</strong></p>
+      <p>
+        Encoder-Decoder 是 NLP 领域里的一种模型框架，广泛用于机器翻译、语音识别等任务。
+        本文将详细介绍 Encoder-Decoder、Seq2Seq 以及它们的升级方案 Attention。
+      </p>
+      <p>
+        想要了解更多 NLP 相关的内容，请访问 
+        <em>NLP 专题</em>（免费提供 59 页的 NLP 文档下载）。
+      </p>
+
+      <h2 id="encoder-decoder">什么是 Encoder-Decoder ？</h2>
+      <p>
+        Encoder-Decoder 模型主要是 NLP 领域里的概念，并不特指某种具体的算法，而是一类算法的统称。
+        它是一个通用框架，在这个框架下可以使用不同的算法来解决不同任务。
+      </p>
+      <p>
+        <strong>Encoder（编码器）：</strong>将现实问题转化为数学问题。
+        <br>
+        <strong>Decoder（解码器）：</strong>求解数学问题，并转化为现实世界的解决方案。
+      </p>
+      <p>
+        整个过程可理解为“压缩—解压”：将输入编码成一个固定长度的向量 c，然后再解码得到输出。
+        不论输入和输出长度如何，中间向量 c 长度都是固定的。
+      </p>
+      <p>
+        根据不同任务，可选用不同的编码器与解码器（如 RNN、LSTM、GRU 等），只要符合这一框架，都可统称为 Encoder-Decoder 模型。
+      </p>
+
+      <h2 id="seq2seq">什么是 Seq2Seq？</h2>
+      <p>
+        Seq2Seq 是 <em>Sequence-to-sequence</em> 的缩写，强调“输入一个序列，输出另一个序列”，
+        特点在于输入与输出的长度可变。例如输入 6 个汉字，输出 3 个英文单词。
+      </p>
+      <p>
+        在 Seq2Seq 框架出现之前，神经网络在图像分类等领域已经取得了成功，但对于序列长度不固定的任务，如机器翻译、语音识别、对话系统等，传统方法难以处理。
+        Seq2Seq 的出现有效地解决了这一问题。
+      </p>
+      <p>
+        <strong>Seq2Seq 与 Encoder-Decoder 的关系：</strong><br>
+        Seq2Seq 更强调“输入序列—输出序列”这一目标；Encoder-Decoder 则是方法论层面，
+        Seq2Seq 的具体实现一般都属于 Encoder-Decoder 范畴。
+      </p>
+
+      <h2 id="applications">Encoder-Decoder 有哪些应用？</h2>
+      <p>
+        Encoder-Decoder 在多个场景中大放异彩：
+      </p>
+      <ul>
+        <li>
+          <strong>机器翻译、对话机器人、诗词生成、代码补全、文章摘要</strong>（文本—文本）
+          <br>输入输出长度可能差异很大，是典型的文本场景。
+        </li>
+        <li>
+          <strong>语音识别</strong>（音频—文本）
+          <br>音频有很强的序列特征，适合使用 Encoder-Decoder。
+        </li>
+        <li>
+          <strong>图像描述生成</strong>（图片—文本）
+          <br>看图说话，通过计算机视觉和 NLP 相结合，实现对图像的文字描述。
+        </li>
+      </ul>
+
+      <h2 id="defect">Encoder-Decoder 的缺陷</h2>
+      <p>
+        由于编码器与解码器之间只有一个固定长度的向量 c 传递信息，导致当输入序列过长时，信息容易丢失。
+        可以将其类比为压缩图片：分辨率越大，压缩到同样大小，失真越严重。
+      </p>
+      <p>
+        因此，输入越长，固定向量 c 容纳的信息就越有限，这在长序列任务中成为瓶颈。
+      </p>
+
+      <h2 id="attention">Attention 解决信息丢失问题</h2>
+      <p>
+        Attention 机制正是为了解决 Encoder-Decoder 信息丢失而出现的。
+        它使得编码器不再只输出一个固定向量 c，而是输出一系列向量。
+      </p>
+      <p>
+        在解码时，每个输出都能访问输入序列的全部信息，挑选关键部分进行“加权求和”，
+        因此在机器翻译等任务中取得了非常好的效果。
+      </p>
+      <p>
+        <strong>总结：</strong>Attention 是对传统 Encoder-Decoder 的升级，使模型能够更好地处理长序列信息。
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 AI上智能. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
