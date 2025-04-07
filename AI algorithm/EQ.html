@@ -8,188 +8,246 @@
   <!-- 如果需要图标，可引入 Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
- :root {
-  --primary-color: #007bff;
-  --secondary-color: #30cfd0;
-  --footer-bg: #1a1a1a;
-  --bg-light: #f0f2f5;
-  --bg-dark: #333;
-  --text-light: #fff;
-  --text-dark: #333;
-}
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #30cfd0;
+      --footer-bg: #1a1a1a;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+    body {
+      background: #f0f2f5;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* 导航栏 */
+    .navbar {
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      margin-right: 3rem;
+    }
+    .nav-brand img, .nav-logo {
+      height: 40px;
+      transition: transform 0.3s;
+    }
+    .nav-brand img:hover, .nav-logo:hover {
+      transform: scale(1.05);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      flex-grow: 1;
+    }
+    .nav-links a {
+      color: #333;
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--primary-color);
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+    .user-info a img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
 
-body {
-  background: var(--bg-light);
-  color: var(--text-dark);
-  font-family: 'Microsoft YaHei', sans-serif;
-  line-height: 1.6;
-}
+    .toggle-btn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 16px;
+      margin-left: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
 
-.navbar {
-  display: flex;
-  align-items: center;
-  padding: 0 5%;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-}
-.nav-brand {
-  display: flex;
-  align-items: center;
-  margin-right: 3rem;
-}
-.nav-brand img, .nav-logo {
-  height: 40px;
-  transition: transform 0.3s;
-}
-.nav-brand img:hover, .nav-logo:hover {
-  transform: scale(1.05);
-}
-.nav-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-  flex-grow: 1;
-}
-.nav-links a {
-  color: #333;
-  text-decoration: none;
-  font-size: 16px;
-  transition: color 0.3s;
-}
-.nav-links a:hover {
-  color: var(--primary-color);
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.user-info a img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-left: 10px;
-}
+    .toggle-btn:hover {
+      background: var(--secondary-color);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
 
-.toggle-btn {
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 16px;
-  margin-left: 20px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background 0.3s, box-shadow 0.3s;
-}
+    .container {
+      max-width: 1100px;
+      margin: 120px auto 50px;
+      background: #fff;
+      padding: 30px 40px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
 
-.toggle-btn:hover {
-  background: var(--secondary-color);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+    .article-header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-.container {
-  max-width: 1100px;
-  margin: 120px auto 50px;
-  background: #fff;
-  padding: 30px 40px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
+    .article-header h1 {
+      font-size: 32px;
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
 
-.article-header {
-  margin-bottom: 20px;
-  text-align: center;
-}
+    .article-meta {
+      font-size: 14px;
+      color: #777;
+    }
 
-.article-header h1 {
-  font-size: 32px;
-  color: var(--primary-color);
-  margin-bottom: 10px;
-}
+    .toc {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f9f9f9;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-.article-meta {
-  font-size: 14px;
-  color: #777;
-}
+    .toc h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #333;
+    }
 
-.toc {
-  margin: 20px 0;
-  padding: 15px;
-  background: #f9f9f9;
-  border-left: 4px solid var(--primary-color);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+    .toc ul {
+      list-style: none;
+      padding-left: 0;
+    }
 
-.toc h4 {
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #333;
-}
+    .toc ul li {
+      margin-bottom: 8px;
+    }
 
-.toc ul {
-  list-style: none;
-  padding-left: 0;
-}
+    .toc ul li a {
+      color: var(--primary-color);
+      font-size: 14px;
+      text-decoration: none;
+    }
 
-.toc ul li {
-  margin-bottom: 8px;
-}
+    .toc ul li a:hover {
+      text-decoration: underline;
+    }
 
-.toc ul li a {
-  color: var(--primary-color);
-  font-size: 14px;
-  text-decoration: none;
-}
+    .article-content p {
+      margin-bottom: 16px;
+      text-indent: 2em;
+      font-size: 16px;
+    }
 
-.toc ul li a:hover {
-  text-decoration: underline;
-}
+    .article-content h2 {
+      font-size: 24px;
+      color: var(--primary-color);
+    }
 
-.article-content p {
-  margin-bottom: 16px;
-  text-indent: 2em;
-  font-size: 16px;
-}
+    .article-content h3 {
+      font-size: 20px;
+      color: #444;
+    }
 
-.article-content h2 {
-  font-size: 24px;
-  color: var(--primary-color);
-}
+    .article-content img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+    }
 
-.article-content h3 {
-  font-size: 20px;
-  color: #444;
-}
+    /* 页脚 */
+    #footer {
+      background: var(--footer-bg);
+      color: #e0e0e0;
+      margin-top: 4rem;
+      border-top: 2px solid var(--primary-color);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .footer-social {
+      text-align: center;
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .social-links a {
+      color: #888;
+      font-size: 1.8rem;
+      transition: color 0.3s;
+    }
+    .social-links a:hover {
+      color: var(--primary-color);
+    }
+    .footer-widgets {
+      padding: 3rem 0;
+    }
+    .widget-col {
+      margin-bottom: 2rem;
+    }
+    .widget-title {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-left: 1rem;
+    }
+    .widget-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 60%;
+      background: var(--secondary-color);
+    }
+    .footer-bottom {
+      text-align: center;
+      padding: 2rem 0 0;
+      color: #888;
+    }
 
-.article-content img {
-  display: block;
-  margin: 20px auto;
-  max-width: 100%;
-}
-
-footer {
-  background: var(--footer-bg);
-  color: #e0e0e0;
-  text-align: center;
-  padding: 20px 5%;
-  font-size: 14px;
-  margin-top: 40px;
-}
-
-@media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-  }
-  .container {
-    margin: 120px 10px 50px;
-    padding: 20px;
-  }
-}
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .footer-widgets .row {
+        flex-direction: column;
+      }
+      .widget-col {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+      }
+      .social-links {
+        gap: 1.5rem;
+      }
+    }
   </style>
 </head>
 <body>
