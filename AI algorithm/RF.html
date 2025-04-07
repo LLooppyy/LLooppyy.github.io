@@ -7,8 +7,206 @@
   <link rel="icon" href="../images/logo.png" type="image/png">
   <!-- 引入 Font Awesome（可选，用于图标） -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- 引入全局样式 -->
-  <link rel="stylesheet" href="../css/styles.css">
+  /* styles.css */
+  <style>
+  :root {
+    --primary-color: #007bff;
+    --secondary-color: #30cfd0;
+    --footer-bg: #1a1a1a;
+    --bg-light: #f0f2f5;
+    --bg-dark: #333;
+    --text-light: #fff;
+    --text-dark: #333;
+  }
+  
+  body {
+    background: var(--bg-light);
+    color: var(--text-dark);
+    font-family: 'Microsoft YaHei', sans-serif;
+    line-height: 1.6;
+  }
+  
+  .dark-mode {
+    background: var(--bg-dark);
+    color: var(--text-light);
+  }
+  
+  .dark-mode .container {
+    background: #444;
+    color: var(--text-light);
+  }
+  
+  .dark-mode .navbar {
+    background: var(--bg-dark);
+    color: var(--text-light);
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    margin-right: 3rem;
+  }
+  .nav-brand img, .nav-logo {
+    height: 40px;
+    transition: transform 0.3s;
+  }
+  .nav-brand img:hover, .nav-logo:hover {
+    transform: scale(1.05);
+  }
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    flex-grow: 1;
+  }
+  .nav-links a {
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover {
+    color: var(--primary-color);
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  .user-info a img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 10px;
+  }
+  
+  .toggle-btn {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-left: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  
+  .toggle-btn:hover {
+    background: var(--secondary-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .container {
+    max-width: 1100px;
+    margin: 120px auto 50px;
+    background: #fff;
+    padding: 30px 40px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .article-header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .article-header h1 {
+    font-size: 32px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+  }
+  
+  .article-meta {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .toc {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .toc h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .toc ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .toc ul li {
+    margin-bottom: 8px;
+  }
+  
+  .toc ul li a {
+    color: var(--primary-color);
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .toc ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .article-content p {
+    margin-bottom: 16px;
+    text-indent: 2em;
+    font-size: 16px;
+  }
+  
+  .article-content h2 {
+    font-size: 24px;
+    color: var(--primary-color);
+  }
+  
+  .article-content h3 {
+    font-size: 20px;
+    color: #444;
+  }
+  
+  .article-content img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+  }
+  
+  footer {
+    background: var(--footer-bg);
+    color: #e0e0e0;
+    text-align: center;
+    padding: 20px 5%;
+    font-size: 14px;
+    margin-top: 40px;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links {
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      margin: 120px 10px 50px;
+      padding: 20px;
+    }
+  }
+</style>
 </head>
 <body>
   <nav class="navbar">
