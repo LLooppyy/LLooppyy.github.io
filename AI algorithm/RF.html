@@ -11,8 +11,23 @@
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <!-- 导航栏区域，通过 JavaScript 动态加载 navbar.html -->
-  <div id="navbar-container"></div>
+  <nav class="navbar">
+    <a class="nav-brand" href="index.html">
+      <img src="images/logo.png" alt="AI知识库">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">首页</a></li>
+      <li><a href="knowledge.html">AI 知识库</a></li>
+      <li><a href="#">AI 新闻</a></li>
+      <li><a href="#">友情链接</a></li>
+    </ul>
+    <div class="user-info">
+      <a href="login.html">
+        <img src="images/user.webp" alt="默认头像">
+      </a>
+      <button class="toggle-btn" onclick="toggleDarkMode()">切换模式</button>
+    </div>
+  </nav>
 
   <!-- 主体文章容器 -->
   <div class="container">
@@ -131,14 +146,6 @@
   </footer>
 
   <script>
-    // 动态加载导航栏，使用 fetch 方式（确保使用本地服务器访问页面，否则可能因跨域问题失败）
-    fetch('../navbar.html')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById('navbar-container').innerHTML = data;
-      })
-      .catch(err => console.error('加载导航栏失败：', err));
-
     // 切换深色/浅色模式
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
