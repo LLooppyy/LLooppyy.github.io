@@ -520,7 +520,6 @@
 
   <script>
 
-    // 目录平滑滚动功能
     document.querySelectorAll('.toc a').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -529,7 +528,6 @@
       });
     });
 
-    // 评论功能
     function submitComment() {
       const username = document.getElementById('username').value.trim();
       const comment = document.getElementById('comment').value.trim();
