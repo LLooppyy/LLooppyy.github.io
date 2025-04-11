@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Encoder-Decoder 和 Seq2Seq - AI知识库</title>
-  <link rel="icon" href="images/logo.png" type="image/png">
+  <link rel="icon" href="../images/logo.png" type="image/png">
   <!-- 如果需要图标，可引入 Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <style>
@@ -231,6 +231,115 @@
       color: #888;
     }
 
+    /* 评论容器整体样式 */
+    .comment-box {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 标题样式 */
+    .comment-box h3 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #3498db;
+    }
+
+    /* 输入框通用样式 */
+    .comment-box input[type="text"],
+    .comment-box textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: 'Segoe UI', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    /* 输入框聚焦效果 */
+    .comment-box input[type="text"]:focus,
+    .comment-box textarea:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+      outline: none;
+    }
+
+    /* 文本域特定样式 */
+    .comment-box textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* 提交按钮样式 */
+    .comment-box button {
+      background: #3498db;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 按钮悬停效果 */
+    .comment-box button:hover {
+      background: #2980b9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    /* 评论列表样式 */
+    .comment-list {
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+
+    /* 单条评论样式 */
+    .comment-list div {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid #3498db;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      animation: commentAppear 0.4s ease;
+    }
+
+    /* 评论用户名字体 */
+    .comment-list strong {
+      color: #2c3e50;
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 评论内容样式 */
+    .comment-list p {
+      color: #4a5568;
+      line-height: 1.6;
+      margin: 0;
+    }
+    @keyframes commentAppear {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 768px) {
       .nav-links {
         flex-wrap: wrap;
@@ -246,6 +355,18 @@
       }
       .social-links {
         gap: 1.5rem;
+      }
+      .comment-box {
+    padding: 1.5rem;
+    margin: 1rem;
+      }
+  
+      .comment-box h3 {
+        font-size: 1.3rem;
+      }
+      
+      .comment-list {
+        margin: 1rem;
       }
     }
   </style>
@@ -307,25 +428,30 @@
       </p>
       <p>
         <strong>Encoder（编码器）：</strong>将现实问题转化为数学问题。
+        <img src="..\images\EQ\qjy1xbyo.webp">
         <br>
         <strong>Decoder（解码器）：</strong>求解数学问题，并转化为现实世界的解决方案。
+        <img src="..\images\EQ\pf9yuvw5.webp">
       </p>
       <p>
-        整个过程可理解为“压缩—解压”：将输入编码成一个固定长度的向量 c，然后再解码得到输出。
-        不论输入和输出长度如何，中间向量 c 长度都是固定的。
-      </p>
-      <p>
-        根据不同任务，可选用不同的编码器与解码器（如 RNN、LSTM、GRU 等），只要符合这一框架，都可统称为 Encoder-Decoder 模型。
+        把 2 个环节连接起来，用通用的图来表达则是下面的样子：
+        <img src="..\images\EQ\6ejpd5jx.webp">
+        关于 Encoder-Decoder，有2 点需要说明：<br>
+       1. 不论输入和输出的长度是什么，中间的「向量 c」 长度都是固定的（这也是它的缺陷，下文会详细说明）<br>
+       2. 根据不同的任务可以选择不同的编码器和解码器（可以是一个 RNN ，但通常是其变种 LSTM 或者 GRU ）<br>
+        只要是符合上面的框架，都可以统称为 Encoder-Decoder 模型。说到 Encoder-Decoder 模型就经常提到一个名词—— Seq2Seq。
       </p>
 
       <h2 id="seq2seq">什么是 Seq2Seq？</h2>
       <p>
         Seq2Seq 是 <em>Sequence-to-sequence</em> 的缩写，强调“输入一个序列，输出另一个序列”，
         特点在于输入与输出的长度可变。例如输入 6 个汉字，输出 3 个英文单词。
+        <img src="..\images\EQ\da7fc-2019-10-28-nmt-model-fast.gif">
       </p>
       <p>
-        在 Seq2Seq 框架出现之前，神经网络在图像分类等领域已经取得了成功，但对于序列长度不固定的任务，如机器翻译、语音识别、对话系统等，传统方法难以处理。
-        Seq2Seq 的出现有效地解决了这一问题。
+        <b>Seq2Seq 的由来</b><br>
+        在 Seq2Seq 框架提出之前，深度神经网络在图像分类等问题上取得了非常好的效果。在其擅长解决的问题中，输入和输出通常都可以表示为固定长度的向量，如果长度稍有变化，会使用补零等操作。<br>
+        然而许多重要的问题，例如机器翻译、语音识别、自动对话等，表示成序列后，其长度事先并不知道。因此如何突破先前深度神经网络的局限，使其可以适应这些场景，成为了13年以来的研究热点，Seq2Seq框架应运而生。
       </p>
       <p>
         <strong>Seq2Seq 与 Encoder-Decoder 的关系：</strong><br>
@@ -336,6 +462,7 @@
       <h2 id="applications">Encoder-Decoder 有哪些应用？</h2>
       <p>
         Encoder-Decoder 在多个场景中大放异彩：
+        <img src="..\images\EQ\6b152-2019-10-28-yingyong.png.webp">
       </p>
       <ul>
         <li>
@@ -356,6 +483,7 @@
       <p>
         由于编码器与解码器之间只有一个固定长度的向量 c 传递信息，导致当输入序列过长时，信息容易丢失。
         可以将其类比为压缩图片：分辨率越大，压缩到同样大小，失真越严重。
+        <img src="..\images\EQ\605l7jou.webp">
       </p>
       <p>
         因此，输入越长，固定向量 c 容纳的信息就越有限，这在长序列任务中成为瓶颈。
@@ -365,6 +493,7 @@
       <p>
         Attention 机制正是为了解决 Encoder-Decoder 信息丢失而出现的。
         它使得编码器不再只输出一个固定向量 c，而是输出一系列向量。
+        <img src="..\images\EQ\wt2fgwcr.webp">
       </p>
       <p>
         在解码时，每个输出都能访问输入序列的全部信息，挑选关键部分进行“加权求和”，

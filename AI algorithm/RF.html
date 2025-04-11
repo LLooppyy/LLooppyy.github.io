@@ -232,6 +232,115 @@
       color: #888;
     }
 
+    /* 评论容器整体样式 */
+    .comment-box {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 标题样式 */
+    .comment-box h3 {
+      color: #2c3e50;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #3498db;
+    }
+
+    /* 输入框通用样式 */
+    .comment-box input[type="text"],
+    .comment-box textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-family: 'Segoe UI', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    /* 输入框聚焦效果 */
+    .comment-box input[type="text"]:focus,
+    .comment-box textarea:focus {
+      border-color: #3498db;
+      box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+      outline: none;
+    }
+
+    /* 文本域特定样式 */
+    .comment-box textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* 提交按钮样式 */
+    .comment-box button {
+      background: #3498db;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* 按钮悬停效果 */
+    .comment-box button:hover {
+      background: #2980b9;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+    }
+
+    /* 评论列表样式 */
+    .comment-list {
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+
+    /* 单条评论样式 */
+    .comment-list div {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid #3498db;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      animation: commentAppear 0.4s ease;
+    }
+
+    /* 评论用户名字体 */
+    .comment-list strong {
+      color: #2c3e50;
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    /* 评论内容样式 */
+    .comment-list p {
+      color: #4a5568;
+      line-height: 1.6;
+      margin: 0;
+    }
+    @keyframes commentAppear {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 768px) {
       .nav-links {
         flex-wrap: wrap;
@@ -247,6 +356,18 @@
       }
       .social-links {
         gap: 1.5rem;
+      }
+      .comment-box {
+    padding: 1.5rem;
+    margin: 1rem;
+      }
+  
+      .comment-box h3 {
+        font-size: 1.3rem;
+      }
+      
+      .comment-list {
+        margin: 1rem;
       }
     }
 </style>
@@ -302,18 +423,20 @@
       <p>
         随机森林属于集成学习中的 Bagging（Bootstrap AGgregation 的简称）方法。如果用图来表示它们之间的关系，则随机森林属于集成学习中的 Bagging 方法。
       </p>
+      <img src="..\images\RF\xdjdj2cc.webp" alt="">
       <p>
         <strong>决策树 – Decision Tree</strong><br>
+        <img src="..\images\RF\avy7702q.webp" alt="">
         决策树是一种简单、解释性强且符合直观思维的算法，是基于 if-then-else 规则的有监督学习算法，上述图片可以直观地表达决策树的逻辑。
       </p>
       <p>
-        了解详情请参考《一文看懂决策树 – Decision tree（3个步骤+3种典型算法+10个优缺点）》。
-      </p>
-      <p>
-        随机森林（Random Forest | RF）由多个决策树构成，不同决策树之间彼此独立。当新的样本进入时，每棵决策树分别判断分类，最终以多数投票的结果作为随机森林的输出。
+        <strong>随机森林（Random Forest | RF）</strong><br>
+        <img src="..\images\RF\3noau2mt.webp" alt="">
+        由多个决策树构成，不同决策树之间彼此独立。当新的样本进入时，每棵决策树分别判断分类，最终以多数投票的结果作为随机森林的输出。
       </p>
 
       <h2 id="steps">构造随机森林的 4 个步骤</h2>
+      <img src="..\images\RF\de617-2019-08-21-4steps.png.webp" alt="">
       <p>构造随机森林主要包括以下 4 个步骤：</p>
       <ul>
         <li>
@@ -352,9 +475,10 @@
       </p>
       <p>测试结果如下：</p>
       <p><em>【随机森林 4 种实现方法对比测试示意图】</em></p>
-      <p>详细说明请参考原文《随机森林算法 4 种实现方法对比测试：DolphinDB 速度最快，XGBoost 表现最差》。</p>
+      <img src="..\images\RF\71b05-2019-08-21-4ceshi.png.webp" alt="">
 
       <h2 id="applications">随机森林的 4 个应用方向</h2>
+      <img src="..\images\RF\jfk6c2kd.webp" alt="">
       <p>随机森林可以应用于：</p>
       <ul>
         <li>离散值的分类</li>
