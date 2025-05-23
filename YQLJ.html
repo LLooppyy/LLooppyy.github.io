@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>友情链接 - AI知识库</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#121212',
+            secondary: '#2196F3',
+            accent: '#30cfd0',
+            neutral: {
+              100: '#f5f5f5',
+              200: '#e5e5e5',
+              300: '#d4d4d4',
+              400: '#a3a3a3',
+              500: '#737373',
+              600: '#525252',
+              700: '#404040',
+              800: '#262626',
+              900: '#171717',
+            }
+          },
+          fontFamily: {
+            sans: ['Microsoft YaHei', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+          }
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .transition-custom {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .bg-gradient {
+        background: linear-gradient(135deg, #ece9e6, #ffffff);
+      }
+      .link-card-hover {
+        @apply transform hover:-translate-y-2 hover:shadow-card-hover transition-all duration-300;
+      }
+      .social-icon {
+        @apply inline-flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300;
+      }
+      .social-icon-hover {
+        @apply hover:scale-110 hover:shadow-lg;
+      }
+    }
+  </style>
+</head>
+<body class="bg-neutral-100 text-neutral-800 font-sans">
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-2">
+          <img src="images/logo.png" alt="AI知识库" class="h-8 md:h-10 transition-transform duration-300 hover:scale-105">
+          <span class="text-xl font-bold text-primary hidden sm:block">AI知识库</span>
+        </a>
+        
+        <!-- 导航链接 - 桌面版 -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="text-neutral-600 hover:text-secondary transition-colors duration-300">首页</a>
+          <a href="knowledge.html" class="text-neutral-600 hover:text-secondary transition-colors duration-300">AI 知识库</a>
+          <a href="#" class="text-neutral-600 hover:text-secondary transition-colors duration-300">AI 新闻</a>
+          <a href="YQLJ.html" class="text-secondary font-medium">友情链接</a>
+        </div>
+        
+        <!-- 用户信息 -->
+        <div class="flex items-center space-x-4">
+          <a href="login.html" class="flex items-center space-x-2">
+            <img src="images/user.webp" alt="用户头像" class="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm">
+            <span class="hidden md:inline text-sm font-medium">登录</span>
+          </a>
+          
+          <!-- 汉堡菜单 - 移动端 -->
+          <button id="menu-toggle" class="md:hidden text-neutral-600 hover:text-secondary transition-colors duration-300">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 导航链接 - 移动端 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-neutral-200">
+      <div class="container mx-auto px-4 py-3 space-y-3">
+        <a href="index.html" class="block py-2 text-neutral-600 hover:text-secondary transition-colors duration-300">首页</a>
+        <a href="knowledge.html" class="block py-2 text-neutral-600 hover:text-secondary transition-colors duration-300">AI 知识库</a>
+        <a href="#" class="block py-2 text-neutral-600 hover:text-secondary transition-colors duration-300">AI 新闻</a>
+        <a href="YQLJ.html" class="block py-2 text-secondary font-medium">友情链接</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 pb-16">
+    <!-- 面包屑导航 -->
+    <nav class="flex mb-8 text-sm" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="index.html" class="inline-flex items-center text-neutral-500 hover:text-secondary transition-colors duration-300">
+            <i class="fa-solid fa-home mr-2"></i>
+            首页
+          </a>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <i class="fa-solid fa-chevron-right text-neutral-400 mx-2 text-xs"></i>
+            <span class="text-secondary font-medium">友情链接</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+    
+    <!-- 页面标题 -->
+    <div class="mb-12 text-center">
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-primary mb-4 text-shadow">友情链接</h1>
+      <p class="text-neutral-600 max-w-2xl mx-auto text-lg">
+        感谢以下合作伙伴对AI知识库的支持，我们将携手推动人工智能领域的知识传播与技术创新。
+      </p>
+    </div>
+    
+    <!-- 友情链接介绍 -->
+    <div class="bg-white rounded-xl shadow-card p-6 md:p-8 transition-custom hover:shadow-card-hover mb-12">
+      <h2 class="text-2xl font-bold text-primary mb-6">关于友情链接</h2>
+      <p class="text-neutral-600 mb-4">
+        AI知识库致力于汇聚人工智能领域的优质资源，与行业内优秀平台建立合作关系，共同促进技术交流与知识共享。如果您的平台也致力于AI领域的发展，欢迎申请加入我们的友情链接。
+      </p>
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a href="#partners" class="inline-flex items-center px-5 py-2 bg-secondary text-white rounded-lg transition-custom hover:bg-secondary/90">
+          <i class="fa-solid fa-handshake mr-2"></i>
+          查看合作伙伴
+        </a>
+        <a href="#apply" class="inline-flex items-center px-5 py-2 bg-neutral-100 text-primary border border-neutral-200 rounded-lg transition-custom hover:bg-neutral-200">
+          <i class="fa-solid fa-link mr-2"></i>
+          申请友情链接
+        </a>
+      </div>
+    </div>
+    
+    <!-- 合作伙伴展示 -->
+    <section id="partners" class="mb-16">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary mb-8 text-center">合作伙伴</h2>
+      
+      <!-- 合作伙伴分类标签 -->
+      <div class="flex flex-wrap justify-center gap-3 mb-8">
+        <button class="px-4 py-2 rounded-full bg-secondary text-white font-medium transition-custom">全部</button>
+        <button class="px-4 py-2 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200 transition-custom">技术社区</button>
+        <button class="px-4 py-2 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200 transition-custom">开源平台</button>
+        <button class="px-4 py-2 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200 transition-custom">学习资源</button>
+        <button class="px-4 py-2 rounded-full bg-neutral-100 text-neutral-700 hover:bg-neutral-200 transition-custom">研究机构</button>
+      </div>
+      
+      <!-- 合作伙伴卡片网格 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- 合作伙伴卡片 1 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=1" alt="CSDN" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">CSDN</h3>
+                <p class="text-white/80 text-sm">全球知名中文IT技术社区</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              CSDN创立于1999年，是中国领先的IT技术社区，为中国软件开发者提供知识传播、在线学习、职业发展等全生命周期服务。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">技术社区</span>
+              </div>
+              <a href="https://www.csdn.net" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 2 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=2" alt="GitHub" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">GitHub</h3>
+                <p class="text-white/80 text-sm">全球最大的开源代码托管平台</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              GitHub是一个面向开源及私有软件项目的托管平台，拥有超过1亿开发者用户，是全球最大的开源社区和代码托管平台。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-neutral-100 text-neutral-800 text-xs rounded-full">开源平台</span>
+              </div>
+              <a href="https://github.com" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 3 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=3" alt="Bilibili" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">Bilibili</h3>
+                <p class="text-white/80 text-sm">年轻人的潮流文化娱乐社区</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              Bilibili是中国领先的年轻人文化社区，提供丰富的AI相关视频内容，包括技术教程、学术讲座、前沿研究等。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-pink-100 text-pink-800 text-xs rounded-full">学习资源</span>
+              </div>
+              <a href="https://www.bilibili.com" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 4 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=4" alt="arXiv" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">arXiv</h3>
+                <p class="text-white/80 text-sm">全球知名的预印本平台</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              arXiv是一个收集物理学、数学、计算机科学、生物学与统计学论文预印本的平台，提供了大量AI领域的前沿研究论文。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">研究机构</span>
+              </div>
+              <a href="https://arxiv.org" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 5 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=5" alt="Medium" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">Medium</h3>
+                <p class="text-white/80 text-sm">全球知名的在线出版平台</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              Medium是一个汇集了全球创作者的在线出版平台，提供了大量关于人工智能的深度文章、技术分析和行业洞察。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">学习资源</span>
+              </div>
+              <a href="https://medium.com" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 6 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=6" alt="Kaggle" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">Kaggle</h3>
+                <p class="text-white/80 text-sm">全球数据科学与机器学习竞赛平台</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              Kaggle是一个数据科学社区和竞赛平台，提供了丰富的数据集、机器学习算法和数据可视化工具，是数据科学家的重要学习资源。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">开源平台</span>
+              </div>
+              <a href="https://www.kaggle.com" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 7 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=7" alt="Google AI" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">Google AI</h3>
+                <p class="text-white/80 text-sm">谷歌人工智能研究团队</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              Google AI致力于推动人工智能研究与应用，开发了TensorFlow等开源框架，并在自然语言处理、计算机视觉等领域取得了众多突破性成果。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-red-100 text-red-800 text-xs rounded-full">研究机构</span>
+              </div>
+              <a href="https://ai.google" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 合作伙伴卡片 8 -->
+        <div class="bg-white rounded-xl shadow-card overflow-hidden link-card-hover">
+          <div class="relative h-48 overflow-hidden">
+            <img src="https://picsum.photos/600/400?random=8" alt="OpenAI" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">OpenAI</h3>
+                <p class="text-white/80 text-sm">人工智能研究与开发公司</p>
+              </div>
+            </div>
+          </div>
+          <div class="p-6">
+            <p class="text-neutral-600 mb-4">
+              OpenAI是一个致力于推动友好AI发展的研究公司，开发了GPT系列大型语言模型，推动了自然语言处理技术的快速发展。
+            </p>
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-2">
+                <span class="px-3 py-1 bg-indigo-100 text-indigo-800 text-xs rounded-full">研究机构</span>
+              </div>
+              <a href="https://openai.com" target="_blank" class="text-secondary hover:text-secondary/80 font-medium flex items-center">
+                访问网站 <i class="fa-solid fa-arrow-right ml-1"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 加载更多按钮 -->
+      <div class="mt-12 text-center">
+        <button class="px-8 py-3 bg-white border border-neutral-300 rounded-lg text-neutral-700 font-medium transition-custom hover:bg-neutral-50">
+          加载更多 <i class="fa-solid fa-chevron-down ml-2"></i>
+        </button>
+      </div>
+    </section>
+    
+    <!-- 申请友情链接 -->
+    <section id="apply" class="bg-white rounded-xl shadow-card p-6 md:p-8 transition-custom hover:shadow-card-hover">
+      <h2 class="text-2xl md:text-3xl font-bold text-primary mb-8">申请友情链接</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-neutral-600 mb-6">
+            如果您的网站或平台与人工智能领域相关，并且有一定的内容质量和流量，欢迎申请加入我们的友情链接。我们将在审核后尽快回复您的申请。
+          </p>
+          
+          <div class="bg-neutral-50 rounded-lg p-5 mb-6">
+            <h3 class="font-bold text-neutral-800 mb-3">友情链接申请条件</h3>
+            <ul class="space-y-2 text-neutral-600">
+              <li class="flex items-start">
+                <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                <span>网站内容与人工智能、机器学习、深度学习等领域相关</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                <span>网站有一定的原创内容，无抄袭、低质量内容</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                <span>网站已稳定运行3个月以上，无不良记录</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa-solid fa-check text-green-500 mt-1 mr-2"></i>
+                <span>已在贵站添加AI知识库的链接</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="bg-neutral-50 rounded-lg p-5">
+            <h3 class="font-bold text-neutral-800 mb-3">AI知识库链接信息</h3>
+            <div class="space-y-3 text-neutral-600">
+              <div>
+                <label class="block font-medium mb-1">网站名称</label>
+                <p>AI知识库</p>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">网站URL</label>
+                <p>https://www.aiknowledgebase.com</p>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">网站描述</label>
+                <p>专注于人工智能领域的知识分享，涵盖算法、模型、应用案例等内容</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div>
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="site-name" class="block text-sm font-medium text-neutral-700 mb-1">网站名称</label>
+                <input type="text" id="site-name" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300" placeholder="请输入您的网站名称">
+              </div>
+              <div>
+                <label for="site-url" class="block text-sm font-medium text-neutral-700 mb-1">网站URL</label>
+                <input type="url" id="site-url" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300" placeholder="请输入您的网站URL">
+              </div>
+            </div>
+            
+            <div>
+              <label for="site-category" class="block text-sm font-medium text-neutral-700 mb-1">网站分类</label>
+              <select id="site-category" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300">
+                <option value="">请选择网站分类</option>
+                <option value="tech-community">技术社区</option>
+                <option value="open-source">开源平台</option>
+                <option value="learning-resource">学习资源</option>
+                <option value="research-institute">研究机构</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+            
+            <div>
+              <label for="site-description" class="block text-sm font-medium text-neutral-700 mb-1">网站描述</label>
+              <textarea id="site-description" rows="4" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300" placeholder="请简要描述您的网站（不超过200字）"></textarea>
+            </div>
+            
+            <div>
+              <label for="contact-email" class="block text-sm font-medium text-neutral-700 mb-1">联系邮箱</label>
+              <input type="email" id="contact-email" class="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300" placeholder="请输入您的联系邮箱">
+            </div>
+            
+            <div>
+              <label class="flex items-center">
+                <input type="checkbox" class="w-4 h-4 text-secondary focus:ring-secondary border-neutral-300 rounded">
+                <span class="ml-2 text-sm text-neutral-600">我已在我的网站添加了AI知识库的友情链接</span>
+              </label>
+            </div>
+            
+            <div>
+              <button type="submit" class="w-full py-3 bg-secondary text-white font-medium rounded-lg transition-custom hover:bg-secondary/90 flex items-center justify-center">
+                <i class="fa-solid fa-paper-plane mr-2"></i>
+                提交申请
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-black text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4">关于我们</h3>
+          <p class="text-gray-300 text-sm">
+            人工智能领域的百科全书，非常适合小白和新手入门 AI 领域。
+            现在市面上大家看到的绝大部分 AI 资料都是追求严谨的"理工科天书"，这个世界不缺少严谨真确晦涩难懂的 AI 资料，但是很缺容易理解的内容。
+            我们希望抛开复杂的公式，复杂的逻辑，复杂的专用名词。做一套文科生也能看懂的 AI 知识库。
+          </p>
+          <div class="mt-4">
+            <a href="#" class="text-white hover:text-secondary mr-4 transition-colors duration-300">
+              <i class="fa-brands fa-wechat fa-lg"></i>
+            </a>
+            <a href="#" class="text-white hover:text-secondary mr-4 transition-colors duration-300">
+              <i class="fa-brands fa-qq fa-lg"></i>
+            </a>
+            <a href="https://github.com/LLooppyy/LLooppyy.github.io" class="text-white hover:text-secondary transition-colors duration-300">
+              <i class="fa-brands fa-github fa-lg"></i>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">知识库导航</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="knowledge.html" class="text-gray-300 hover:text-white transition-colors duration-300">算法中心</a></li>
+            <li><a href="application.html" class="text-gray-300 hover:text-white transition-colors duration-300">应用案例</a></li>
+            <li><a href="foundation.html" class="text-gray-300 hover:text-white transition-colors duration-300">数学基础</a></li>
+            <li><a href="tools.html" class="text-gray-300 hover:text-white transition-colors duration-300">开发工具</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">最新文章</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">大模型微调实战指南</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">AI安全伦理发展趋势</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-300">计算机视觉年度总结</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">联系我们</h3>
+          <p class="text-gray-300 text-sm">
+            邮箱：1169370301@qq.com<br>
+            地址：成都大学
+          </p>
+          <form class="mt-4">
+            <input type="email" placeholder="订阅技术周报(输入您的邮箱)" class="w-full p-2 mb-2 rounded-md bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary">
+            <button type="submit" class="w-full p-2 bg-secondary text-white rounded-md hover:bg-secondary/80 transition-colors duration-300">
+              立即订阅
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+        <p>© 2025 AI知识库. 保留所有权利. | 粤ICP备1204号</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // 移动端菜单切换
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('bg-white/95', 'backdrop-blur-sm');
+        nav.classList.remove('bg-white');
+      } else {
+        nav.classList.remove('bg-white/95', 'backdrop-blur-sm');
+        nav.classList.add('bg-white');
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 关闭移动端菜单
+          document.getElementById('mobile-menu').classList.add('hidden');
+        }
+      });
+    });
+    
+    // 合作伙伴分类筛选
+    const categoryButtons = document.querySelectorAll('#partners button');
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // 移除所有按钮的活跃状态
+        categoryButtons.forEach(btn => {
+          btn.classList.remove('bg-secondary', 'text-white');
+          btn.classList.add('bg-neutral-100', 'text-neutral-700');
+        });
+        
+        // 添加当前按钮的活跃状态
+        this.classList.remove('bg-neutral-100', 'text-neutral-700');
+        this.classList.add('bg-secondary', 'text-white');
+        
+        // 这里可以添加实际的筛选逻辑
+        const category = this.textContent.trim();
+        console.log(`筛选分类: ${category}`);
+        // 实际项目中可以根据分类筛选合作伙伴卡片
+      });
+    });
+    
+    // 表单提交处理
+    document.querySelector('form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // 获取表单数据
+      const formData = {
+        siteName: document.getElementById('site-name').value,
+        siteUrl: document.getElementById('site-url').value,
+        siteCategory: document.getElementById('site-category').value,
+        siteDescription: document.getElementById('site-description').value,
+        contactEmail: document.getElementById('contact-email').value,
+        hasLink: document.querySelector('input[type="checkbox"]').checked
+      };
+      
+      // 简单验证
+      if (!formData.siteName || !formData.siteUrl || !formData.contactEmail) {
+        alert('请填写必填字段');
+        return;
+      }
+      
+      // 这里可以添加实际的表单提交逻辑
+      console.log('表单数据:', formData);
+      
+      // 模拟提交成功
+      alert('申请已提交，我们将尽快审核并回复您！');
+      this.reset();
+    });
+  </script>
+</body>
+</html>

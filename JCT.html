@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础知识 - AI知识库</title>
+  <link rel="icon" href="images/logo.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+  
+  <!-- Tailwind配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#121212',
+            secondary: '#2196F3',
+            accent: '#30cfd0',
+            neutral: {
+              100: '#f5f5f5',
+              200: '#e5e5e5',
+              300: '#d4d4d4',
+              400: '#a3a3a3',
+              500: '#737373',
+              600: '#525252',
+              700: '#404040',
+              800: '#262626',
+              900: '#171717',
+            }
+          },
+          fontFamily: {
+            sans: ['Microsoft YaHei', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'card-hover': '0 8px 30px rgba(0, 0, 0, 0.12)',
+          }
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .transition-custom {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .bg-gradient {
+        background: linear-gradient(135deg, #ece9e6, #ffffff);
+      }
+      .article-link-hover {
+        @apply hover:text-accent hover:translate-x-1 transition-all duration-300;
+      }
+      .pagination-btn {
+        @apply px-4 py-2 rounded-md transition-all duration-300;
+      }
+      .pagination-btn-active {
+        @apply bg-secondary text-white font-medium;
+      }
+      .pagination-btn-hover {
+        @apply hover:bg-secondary/10;
+      }
+    }
+  </style>
+</head>
+<body class="bg-neutral-100 text-neutral-800 font-sans">
+  <!-- 导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-2">
+          <img src="images/logo.png" alt="AI知识库" class="h-8 md:h-10 transition-transform duration-300 hover:scale-105">
+          <span class="text-xl font-bold text-primary hidden sm:block">AI知识库</span>
+        </a>
+        
+        <!-- 导航链接 - 桌面版 -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="text-neutral-600 hover:text-secondary transition-colors duration-300">首页</a>
+          <a href="knowledge.html" class="text-secondary font-medium">AI 知识库</a>
+          <a href="#" class="text-neutral-600 hover:text-secondary transition-colors duration-300">AI 新闻</a>
+          <a href="YQLJ.html" class="text-neutral-600 hover:text-secondary transition-colors duration-300">友情链接</a>
+        </div>
+        
+        <!-- 用户信息 -->
+        <div class="flex items-center space-x-4">
+          <a href="login.html" class="flex items-center space-x-2">
+            <img src="images/user.webp" alt="用户头像" class="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm">
+            <span class="hidden md:inline text-sm font-medium">登录</span>
+          </a>
+          
+          <!-- 汉堡菜单 - 移动端 -->
+          <button id="menu-toggle" class="md:hidden text-neutral-600 hover:text-secondary transition-colors duration-300">
+            <i class="fa-solid fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 导航链接 - 移动端 -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-neutral-200">
+      <div class="container mx-auto px-4 py-3 space-y-3">
+        <a href="index.html" class="block py-2 text-neutral-600 hover:text-secondary transition-colors duration-300">首页</a>
+        <a href="knowledge.html" class="block py-2 text-secondary font-medium">AI 知识库</a>
+        <a href="#" class="block py-2 text-neutral-600 hover:text-secondary transition-colors duration-300">AI 新闻</a>
+        <a href="#" class="block py-2 text-neutral-600 hover:text-secondary transition-colors duration-300">友情链接</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主内容区 -->
+  <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 md:pt-28 pb-16">
+    <!-- 面包屑导航 -->
+    <nav class="flex mb-8 text-sm" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 md:space-x-3">
+        <li class="inline-flex items-center">
+          <a href="index.html" class="inline-flex items-center text-neutral-500 hover:text-secondary transition-colors duration-300">
+            <i class="fa-solid fa-home mr-2"></i>
+            首页
+          </a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <i class="fa-solid fa-chevron-right text-neutral-400 mx-2 text-xs"></i>
+            <a href="knowledge.html" class="text-neutral-500 hover:text-secondary transition-colors duration-300">AI 知识库</a>
+          </div>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <i class="fa-solid fa-chevron-right text-neutral-400 mx-2 text-xs"></i>
+            <span class="text-secondary font-medium">基础 知识</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+    
+    <!-- 页面标题 -->
+    <div class="mb-12 text-center">
+      <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-primary mb-4 text-shadow">基础 知识</h1>
+      <p class="text-neutral-600 max-w-2xl mx-auto text-lg">
+        人工智能（AI）时代，人人都需要了解一些人工智能的基础知识，这些基础的知识可以帮助我们理解这个新时代，跟上这个新时代。
+      </p>
+    </div>
+    
+    <!-- 文章列表卡片 -->
+    <div class="bg-white rounded-xl shadow-card p-6 md:p-8 transition-custom hover:shadow-card-hover mb-10">
+      <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4 md:mb-0">知识文章列表</h2>
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <input type="text" placeholder="搜索文章..." class="pl-10 pr-4 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300 w-full md:w-64">
+            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"></i>
+          </div>
+          <select class="bg-neutral-100 border border-neutral-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300">
+            <option>最新发布</option>
+            <option>最多点赞</option>
+            <option>最多阅读</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- 文章列表 -->
+      <ul class="space-y-6">
+        <!-- 文章项 1 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">人工智能 – Artificial intelligence | AI</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+               人工智能是研究、开发用于模拟、延伸和扩展人类智能的理论/方法/技术及应用系统的一门新的技术科学
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2019年1月3日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  2.4k 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">504</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+        
+        <!-- 文章项 2 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">分类模型评估指标——准确率、精准率、召回率、F1、ROC曲线、AUC曲线</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+              用于评估分类模型性能的核心指标，帮助衡量模型预测结果的可靠性和有效性
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2018年12月28日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  1.8k 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">81</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+        
+        <!-- 文章项 3 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">GPU(Graphics Processing Unit)</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+              图形处理器，擅长并行计算，广泛应用于深度学习模型的加速训练和推理
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2019年11月13日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  1.5k 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">73</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+        
+        <!-- 文章项 4 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">算力 – computation</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+              数据处理能力的统称，是人工智能发展的核心要素之一，取决于硬件性能和算法效率
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2019年1月3日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  1.2k 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">38</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+        
+        <!-- 文章项 5 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">监督学习 – Supervised learning</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+              基于有标签数据训练模型的机器学习方法，常见于分类和回归任务，如垃圾邮件分类
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2019年1月3日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  1.1k 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">30</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+        
+        <!-- 文章项 6 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">训练集、验证集、测试集（附：分割方法+交叉验证）</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+              机器学习中用于模型训练、调优和评估的数据划分方法，确保模型泛化能力的关键步骤
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2019年1月3日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  987 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">27</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+        
+        <!-- 文章项 7 -->
+        <li class="border-b border-neutral-200 pb-6 last:border-0 last:pb-0">
+          <article class="group">
+            <a href="#" class="block mb-3">
+              <h3 class="text-xl font-semibold text-neutral-800 group-hover:text-secondary transition-colors duration-300">TPU（Tensor Processing Unit）</h3>
+            </a>
+            <p class="text-neutral-600 mb-4 line-clamp-2">
+               张量处理单元，专为深度学习优化的定制化芯片，显著提升矩阵运算速度
+            </p>
+            <div class="flex flex-wrap items-center justify-between text-sm text-neutral-500">
+              <span class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-2"></i>
+                2019年1月3日
+              </span>
+              <div class="flex items-center space-x-4">
+                <span class="flex items-center">
+                  <i class="fa-regular fa-eye mr-2"></i>
+                  876 阅读
+                </span>
+                <span class="flex items-center">
+                  <i class="fa-regular fa-thumbs-up mr-2 text-green-500"></i>
+                  <span class="text-green-600 font-medium">21</span> 点赞
+                </span>
+              </div>
+            </div>
+          </article>
+        </li>
+      </ul>
+      
+      <!-- 分页控件 -->
+      <div class="mt-12 flex justify-center">
+        <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+          <a href="#" class="pagination-btn pagination-btn-hover rounded-l-md">
+            <i class="fa-solid fa-chevron-left"></i>
+          </a>
+          <a href="#" class="pagination-btn pagination-btn-active">1</a>
+          <a href="#" class="pagination-btn pagination-btn-hover">2</a>
+          <a href="#" class="pagination-btn pagination-btn-hover">3</a>
+          <span class="pagination-btn">...</span>
+          <a href="#" class="pagination-btn pagination-btn-hover">8</a>
+          <a href="#" class="pagination-btn pagination-btn-hover rounded-r-md">
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="bg-primary text-white py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-bold mb-4">AI知识库</h3>
+          <p class="text-neutral-300 text-sm">
+            专注于人工智能领域的知识分享，涵盖算法、模型、应用案例等内容，帮助开发者和爱好者深入理解AI技术。
+          </p>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">快速链接</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="text-neutral-300 hover:text-white transition-colors duration-300">首页</a></li>
+            <li><a href="knowledge.html" class="text-neutral-300 hover:text-white transition-colors duration-300">AI 知识库</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors duration-300">AI 新闻</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors duration-300">友情链接</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">热门主题</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors duration-300">深度学习</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors duration-300">计算机视觉</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors duration-300">自然语言处理</a></li>
+            <li><a href="#" class="text-neutral-300 hover:text-white transition-colors duration-300">强化学习</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold mb-4">关注我们</h3>
+          <div class="flex space-x-4 mb-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors duration-300">
+              <i class="fa-brands fa-weibo text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors duration-300">
+              <i class="fa-brands fa-wechat text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary transition-colors duration-300">
+              <i class="fa-brands fa-github text-white"></i>
+            </a>
+          </div>
+          <p class="text-neutral-300 text-sm">订阅我们的技术周刊</p>
+          <div class="mt-2 flex">
+            <input type="email" placeholder="输入您的邮箱" class="px-4 py-2 rounded-l-md w-full focus:outline-none text-neutral-800">
+            <button class="bg-secondary hover:bg-secondary/90 px-4 py-2 rounded-r-md transition-colors duration-300">
+              订阅
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-neutral-700 mt-8 pt-8 text-center text-neutral-400 text-sm">
+        <p>© 2023 AI知识库. 保留所有权利.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // 导航栏滚动效果
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 10) {
+        nav.classList.add('shadow-lg');
+        nav.classList.add('bg-white/95');
+        nav.classList.add('backdrop-blur-sm');
+      } else {
+        nav.classList.remove('shadow-lg');
+        nav.classList.remove('bg-white/95');
+        nav.classList.remove('backdrop-blur-sm');
+      }
+    });
+    
+    // 文章卡片悬停效果
+    const articles = document.querySelectorAll('article');
+    articles.forEach(article => {
+      article.addEventListener('mouseenter', () => {
+        article.classList.add('bg-neutral-50');
+        article.classList.add('rounded-lg');
+      });
+      article.addEventListener('mouseleave', () => {
+        article.classList.remove('bg-neutral-50');
+        article.classList.remove('rounded-lg');
+      });
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
